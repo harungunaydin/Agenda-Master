@@ -12,7 +12,13 @@ class EventTableViewController: UITableViewController {
     let kRowsCount = 10
     
     var cellHeights = [CGFloat]()
-
+    
+    func refreshTable() {
+        
+        tableView.reloadData()
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
@@ -50,6 +56,26 @@ class EventTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FoldingCell", forIndexPath: indexPath) as! EventTableViewCell
+        return cell;
+        let row = indexPath.row
+        
+        cell.objectId = allEvents[row].objectId
+        cell.row = row
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        // set LeftView backgroundColor
+        if let ind = defaults.objectForKey("colorIndexForCellForId_" + cell.objectId) as? Int {
+            cell.leftView.backgroundColor = cellLeftViewColors[ind]
+            
+        } else {
+            defaults.setObject(0, forKey: "colorIndexForCellForId_" + cell.objectId)
+            cell.leftView.backgroundColor = cellLeftViewColors[0]
+        }
+        
+        
+        
+        
 
         return cell
     }

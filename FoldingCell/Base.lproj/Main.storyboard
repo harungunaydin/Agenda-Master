@@ -123,14 +123,25 @@
                                                             </constraints>
                                                             <state key="normal" title="SHOW LOCATION"/>
                                                         </button>
-                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xiD-SC-mNs">
+                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xiD-SC-mNs">
                                                             <rect key="frame" x="0.0" y="0.0" width="560" height="165"/>
                                                         </mapView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGO-GX-hEQ">
+                                                            <rect key="frame" x="517" y="8" width="35" height="35"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="35" id="bPy-4l-Q0K"/>
+                                                                <constraint firstAttribute="width" constant="35" id="dnw-Mp-6c5"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                            <state key="normal" title="+"/>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="eGO-GX-hEQ" secondAttribute="trailing" constant="8" id="C0n-37-AO7"/>
                                                         <constraint firstItem="lhy-TV-V2c" firstAttribute="centerX" secondItem="stA-YF-Roj" secondAttribute="centerX" id="KpT-GL-KbG"/>
                                                         <constraint firstItem="lhy-TV-V2c" firstAttribute="centerY" secondItem="stA-YF-Roj" secondAttribute="centerY" id="SKK-Io-mfQ"/>
+                                                        <constraint firstItem="eGO-GX-hEQ" firstAttribute="top" secondItem="stA-YF-Roj" secondAttribute="top" constant="8" id="XvL-wJ-2Wt"/>
                                                         <constraint firstAttribute="height" constant="165" id="zna-xw-SZ3"/>
                                                     </constraints>
                                                 </view>
@@ -294,12 +305,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="biggerMapButton" destination="eGO-GX-hEQ" id="zAM-R7-qOM"/>
                                     <outlet property="containerView" destination="CGm-93-iX0" id="gSm-z4-RdG"/>
+                                    <outlet property="endDateLabel" destination="mNy-cH-kEi" id="Mfa-Qu-fvi"/>
+                                    <outlet property="eventNameLabel" destination="WGg-pL-iTY" id="42m-cv-eao"/>
                                     <outlet property="foregroundView" destination="CQr-i9-7br" id="88q-9Z-PtA"/>
                                     <outlet property="leftView" destination="UhV-pr-kw4" id="a4j-J9-Wn8"/>
                                     <outlet property="mapButton" destination="lhy-TV-V2c" id="9cY-U3-cew"/>
                                     <outlet property="mapView" destination="xiD-SC-mNs" id="FLP-Wf-LXL"/>
                                     <outlet property="secondContainerView" destination="stA-YF-Roj" id="Su8-0W-fZl"/>
+                                    <outlet property="startDateLabel" destination="BUL-Of-nxF" id="hAd-hN-hdv"/>
+                                    <outlet property="trashButton" destination="GIq-nQ-eox" id="vjJ-f9-rLc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -313,7 +329,28 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WxO-6i-Q9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-542" y="148.5"/>
+            <point key="canvasLocation" x="-750" y="148.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="arS-ch-eyp">
+            <objects>
+                <viewController id="7Vr-GO-KYC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HCS-pU-8fd"/>
+                        <viewControllerLayoutGuide type="bottom" id="KqX-WG-8Vd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="L4F-fM-h8N">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="600" height="600"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YhK-09-nXS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-95" y="101"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="4pZ-FT-S1E">
@@ -337,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TUu-OB-QbS" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1111.5" y="134.5"/>
+            <point key="canvasLocation" x="-1309.5" y="134.5"/>
         </scene>
     </scenes>
     <resources>

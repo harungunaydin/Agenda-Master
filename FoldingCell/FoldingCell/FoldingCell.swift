@@ -241,8 +241,6 @@ public class FoldingCell: UITableViewCell {
   
   public func selectedAnimation(isSelected: Bool, animated: Bool, completion: CompletionHandler?) {
     
-    print("selectedAnimation")
-    
     if isSelected {
       
       if animated {
