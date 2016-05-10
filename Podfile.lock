@@ -1,0 +1,35 @@
+PODS:
+  - GoogleAPIClient/Calendar (1.0.3):
+    - GoogleAPIClient/Core
+    - GTMSessionFetcher (~> 1.1)
+  - GoogleAPIClient/Core (1.0.3):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMOAuth2 (1.1.1):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.3):
+    - GTMSessionFetcher/Full (= 1.1.3)
+  - GTMSessionFetcher/Core (1.1.3)
+  - GTMSessionFetcher/Full (1.1.3):
+    - GTMSessionFetcher/Core (= 1.1.3)
+  - LTMorphingLabel (0.1.1)
+  - SCLAlertView (0.5.6)
+  - ZFRippleButton (0.5.1)
+
+DEPENDENCIES:
+  - GoogleAPIClient/Calendar (~> 1.0.2)
+  - GTMOAuth2 (~> 1.1.0)
+  - LTMorphingLabel (~> 0.1.1)
+  - SCLAlertView (~> 0.5.6)
+  - ZFRippleButton (~> 0.5)
+
+SPEC CHECKSUMS:
+  GoogleAPIClient: 06a32889d31c0f1c9ae528e31139ec3680b25e0d
+  GTMOAuth2: bdb12f3e0d2110bfe585f6151230b883beb4d042
+  GTMSessionFetcher: 86678550b1b2862b0df62e693a177c916debd7d2
+  LTMorphingLabel: dfc40f43a0dcf81867b1f29431f34e861a5f1b35
+  SCLAlertView: c2b916952520d96cf5e886a38053f1b8c3da502e
+  ZFRippleButton: 263bdf4e31dabd5826133b121d9ff908c87a6a11
+
+PODFILE CHECKSUM: 4e92a7496c810a3d7a49e9552026be87884807ca
+
+COCOAPODS: 1.0.0.rc.1
