@@ -37,8 +37,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func login() {
         
         // Implement this function
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let authorizationsViewController = storyboard.instantiateViewControllerWithIdentifier("AuthorizationsViewController") as! AuthorizationsViewController
         
-        performSegueWithIdentifier("_Login", sender: self)
+        let curwindow = UIApplication.sharedApplication().keyWindow
+        curwindow?.backgroundColor = UIColor(red: 236.0, green: 238.0, blue: 241.0, alpha: 1.0)
+        curwindow?.rootViewController = authorizationsViewController
+        curwindow?.makeKeyAndVisible()
         
     }
     

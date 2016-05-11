@@ -39,7 +39,7 @@ class EventTableViewCell: FoldingCell {
         let singleTap = UITapGestureRecognizer(target: self, action: nil)
         singleTap.numberOfTapsRequired = 1
         mapView.addGestureRecognizer(singleTap)
- 
+        
         mapView.hidden = true
         
         mapButton.layer.cornerRadius = 13
@@ -47,17 +47,20 @@ class EventTableViewCell: FoldingCell {
         mapButton.backgroundColor = UIColor.greenColor()
         mapButton.addTarget(self, action: #selector(self.setupMapView), forControlEvents: UIControlEvents.TouchUpInside)
         
-        biggerMapButton.addTarget(self, action: #selector(self.switchToMapViewController), forControlEvents: UIControlEvents.TouchUpInside)
+        biggerMapButton.hidden = true
         
     }
     
     func deleteEvent() {
         
-        if row == nil {
-            return
-        }
+        print("deleteEvent()")
+        
+        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedCellForId_" + self.objectId )
         
         allEvents.removeAtIndex(row)
+        
+        //Somehow Refresh the Table
+        
         
         
     }
@@ -66,6 +69,32 @@ class EventTableViewCell: FoldingCell {
     func setupMapView() {
         
         mapButton.hidden = true
+        biggerMapButton.hidden = false
+        
+        let geocoder = CLGeocoder()
+        
+        geocoder.geocodeAddressString(filteredEvents[row].location) { (placemarks, error) in
+            
+            if let placemarks = placemarks {
+                
+                if placemarks.count > 0 {
+                    
+                    let placemark = MKPlacemark(placemark: placemarks[0])
+                    
+                    var region: MKCoordinateRegion = self.mapView.region
+                    region.center = (placemark.location?.coordinate)!
+                    region.span.longitudeDelta /= 8.0
+                    region.span.latitudeDelta /= 8.0
+                    self.mapView.setRegion(region, animated: true)
+                    self.mapView.addAnnotation(placemark)
+                    
+                }
+                
+                
+            }
+            
+        }
+        
         mapView.hidden = false
         
     }
@@ -79,18 +108,13 @@ class EventTableViewCell: FoldingCell {
         
         if let ind = NSUserDefaults.standardUserDefaults().objectForKey("colorIndexForCellForId_" + self.objectId) as? Int {
             
-            NSUserDefaults.standardUserDefaults().setObject( (ind+1) % cellLeftViewColors.count , forKey: "colorIndexForCellForId_" + self.objectId)
-            leftView.backgroundColor = cellLeftViewColors[ (ind+1) % cellLeftViewColors.count ]
+            let index = (ind + 1) % cellLeftViewColors.count
+            NSUserDefaults.standardUserDefaults().setObject( index , forKey: "colorIndexForCellForId_" + self.objectId)
+            leftView.backgroundColor = cellLeftViewColors[index]
             
         } else {
             print("An error occured - changeColor(), EventTableViewCell")
         }
-    }
-    
-    func switchToMapViewController() {
-        
-        print("Implement this")
-        
     }
     
     override func closeAnimation(completion completion: CompletionHandler?) {
@@ -98,6 +122,7 @@ class EventTableViewCell: FoldingCell {
         mapView.hidden = true
         super.closeAnimation(completion: completion)
         mapButton.hidden = false
+        biggerMapButton.hidden = true
         
     }
     

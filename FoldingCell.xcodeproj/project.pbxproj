@@ -35,6 +35,7 @@
 		230EE4FC1CDF1381007AF656 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4E11CDF1381007AF656 /* EventTableViewController.swift */; };
 		230EE4FD1CDF1381007AF656 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4E21CDF1381007AF656 /* LoginViewController.swift */; };
 		231BD26B1CDF14B400178EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231BD26A1CDF14B400178EFE /* AppDelegate.swift */; };
+		23375E131CE30B390070D9DE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23375E121CE30B390070D9DE /* MapViewController.swift */; };
 		23C4AB511CE01307009249F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C4AB501CE01307009249F3 /* MapKit.framework */; };
 		8498513F1C5639F9006FA400 /* FoldingCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498513E1C5639F9006FA400 /* FoldingCellTests.swift */; };
 		AC147A9000C81CE584EC64CE /* Pods_FoldingCell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1208C0D98C7F0F54F7CF580C /* Pods_FoldingCell.framework */; };
@@ -93,6 +94,7 @@
 		230EE4E11CDF1381007AF656 /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		230EE4E21CDF1381007AF656 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		231BD26A1CDF14B400178EFE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		23375E121CE30B390070D9DE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		23A5DDCA7F0CCD829C3A66AB /* Pods-FoldingCell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoldingCell.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoldingCell/Pods-FoldingCell.debug.xcconfig"; sourceTree = "<group>"; };
 		23C4AB501CE01307009249F3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		23C4AB521CE01334009249F3 /* FoldingCell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FoldingCell.entitlements; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				230EE4E01CDF1381007AF656 /* AuthorizationsViewController.swift */,
 				230EE4E11CDF1381007AF656 /* EventTableViewController.swift */,
+				23375E121CE30B390070D9DE /* MapViewController.swift */,
 				230EE4E21CDF1381007AF656 /* LoginViewController.swift */,
 			);
 			path = ViewController;
@@ -458,6 +461,7 @@
 				230EE4E61CDF1381007AF656 /* Event.swift in Sources */,
 				230EE4E81CDF1381007AF656 /* UITextFieldExtension.swift in Sources */,
 				230EE4E71CDF1381007AF656 /* EventSource.swift in Sources */,
+				23375E131CE30B390070D9DE /* MapViewController.swift in Sources */,
 				231BD26B1CDF14B400178EFE /* AppDelegate.swift in Sources */,
 				230EE4FA1CDF1381007AF656 /* EventTableViewCell.swift in Sources */,
 				230EE4FD1CDF1381007AF656 /* LoginViewController.swift in Sources */,

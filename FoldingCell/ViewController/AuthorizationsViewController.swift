@@ -18,30 +18,63 @@ class AuthorizationsViewController: UIViewController {
     private let service = GTLServiceCalendar()
     private let scopes = [kGTLAuthScopeCalendarReadonly]
 
+    @IBOutlet weak var googleButton: UIImageView!
+    @IBOutlet weak var appleButton: UIImageView!
+    @IBOutlet weak var facebookButton: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let googleTap = UITapGestureRecognizer(target: self, action: #selector(self.linkWithGoogleCalendar) )
+        googleButton.addGestureRecognizer(googleTap)
+        
+        let appleTap = UITapGestureRecognizer(target: self, action: #selector(self.linkWithIphoneCalendar) )
+        appleButton.addGestureRecognizer(appleTap)
+        
+        let facebookTap = UITapGestureRecognizer(target: self, action: #selector(self.linkWithFacebookCalendar) )
+        facebookButton.addGestureRecognizer(facebookTap)
+        
+        
+    }
+    
+    func linkWithGoogleCalendar() {
         
         if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName( kKeychainItemName, clientID: kClientID, clientSecret: nil) {
             service.authorizer = auth
         }
+        
+        if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
+            self.displayAlert("Already Linked", message: "This account is already linked with Google Calendar. Fetching new Events...")
+            self.fetchEventsFromGoogle()
+        } else {
+            presentViewController( createAuthController(), animated: true, completion: nil )
+        }
+        
+    }
+    
+    func linkWithIphoneCalendar() {
+        
+    }
+    
+    func linkWithFacebookCalendar() {
+        
     }
     
     override func viewDidAppear(animated: Bool) {
         
-        if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
-            fetchEventsFromGoogle()
-        } else {
-            presentViewController( createAuthController(), animated: true, completion: nil )
-        }
     }
     
     func fetchEventsFromGoogle() {
+        
+        print("fetchEventsFromGoogle")
         
         let query = GTLQueryCalendar.queryForEventsListWithCalendarId("primary")
         query.maxResults = 100
         query.timeMin = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone() )
         query.singleEvents = true
         query.orderBy = kGTLCalendarOrderByStartTime
+        
+        allEvents.removeAll()
         
         service.executeQuery(query) { (ticket, object, error) in
             
@@ -51,21 +84,46 @@ class AuthorizationsViewController: UIViewController {
                     
                     let newEvent = Event()
                     
-                    newEvent.name = event.descriptionProperty
-                    newEvent.startDate = event.start.date.date
-                    newEvent.endDate = event.end.date.date
-                    newEvent.duration = newEvent.endDate.timeIntervalSinceDate(newEvent.startDate)
+                    newEvent.name = event.summary
+                    
+                    if let start = event.start {
+                        if let start = start.date {
+                            newEvent.startDate = start.date
+                        }
+                    }
+                    
+                    if event.start != nil && event.start.date != nil {
+                        newEvent.startDate = event.start.date.date
+                    } else {
+                        newEvent.startDate = nil
+                    }
+                    
+                    if event.end != nil && event.end.date != nil {
+                        newEvent.endDate = event.end.date.date
+                    } else {
+                        newEvent.endDate = nil
+                    }
+                    
+                    if newEvent.startDate != nil && newEvent.endDate != nil {
+                        newEvent.duration = newEvent.endDate.timeIntervalSinceDate(newEvent.startDate)
+                    }
                     newEvent.source = sources[0]
-                    newEvent.summary = event.summary
+                    newEvent.summary = event.descriptionProperty
                     newEvent.location = event.location
+                    newEvent.objectId = event.identifier
+                    
                     
                     allEvents.append(newEvent)
-                    
-                    print( "description => \(event.summary)")
                 }
+                
+                // Delete this line when the time comes
+                filteredEvents = allEvents
             }
             
+            print("fetchEventsFromGoogle - Done")
+            
         }
+        
         
     }
     

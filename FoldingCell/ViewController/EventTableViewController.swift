@@ -8,8 +8,6 @@ class EventTableViewController: UITableViewController {
     
     let kCloseCellHeight: CGFloat = 179
     let kOpenCellHeight: CGFloat = 488
-
-    let kRowsCount = 10
     
     var cellHeights = [CGFloat]()
     
@@ -29,7 +27,7 @@ class EventTableViewController: UITableViewController {
     
     // MARK: configure
     func createCellHeightsArray() {
-        for _ in 0...kRowsCount {
+        for _ in 0...filteredEvents.count {
             cellHeights.append(kCloseCellHeight)
         }
     }
@@ -37,7 +35,7 @@ class EventTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return filteredEvents.count
     }
 
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -56,11 +54,15 @@ class EventTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FoldingCell", forIndexPath: indexPath) as! EventTableViewCell
-        return cell;
-        let row = indexPath.row
         
-        cell.objectId = allEvents[row].objectId
-        cell.row = row
+        cell.row = indexPath.row
+        let row = cell.row
+        
+        cell.biggerMapButton.tag = row
+        
+        let event = filteredEvents[row]
+        
+        cell.objectId = event.objectId
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -73,9 +75,16 @@ class EventTableViewController: UITableViewController {
             cell.leftView.backgroundColor = cellLeftViewColors[0]
         }
         
+        cell.eventNameLabel.text = event.name
         
+        if let start = event.startDate {
+            cell.startDateLabel.text = "\(start)"
+        }
         
-        
+        if let end = event.endDate {
+            cell.endDateLabel.text = "\(end)"
+        }
+
 
         return cell
     }
@@ -89,8 +98,6 @@ class EventTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
-        
-        print("didSelectRowAtIndexPath")
         
         if cell.isAnimating() {
             return
@@ -112,6 +119,24 @@ class EventTableViewController: UITableViewController {
             tableView.endUpdates()
         }, completion: nil)
 
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if let destinationVC = segue.destinationViewController as? MapViewController {
+            print("asdf")
+            
+            let indexPath = NSIndexPath(forItem: sender!.tag, inSection: 0)
+            
+            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell {
+                destinationVC.mapView = cell.mapView
+            }
+            
+        } else {
+            print("Error occured - prepareForSegue, EventTableViewController")
+        }
         
     }
+    
+    
 }
