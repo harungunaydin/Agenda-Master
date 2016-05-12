@@ -15,6 +15,7 @@ var cellLeftViewColors = [ UIColor.purpleColor() , UIColor.redColor() , UIColor.
 class EventTableViewCell: FoldingCell {
     
     @IBOutlet weak var eventNameLabel: UILabel!
+    @IBOutlet weak var eventNameLabel2: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var leftView: UIView!
@@ -23,6 +24,9 @@ class EventTableViewCell: FoldingCell {
     @IBOutlet weak var mapButton: ZFRippleButton!
     @IBOutlet weak var biggerMapButton: UIButton!
     @IBOutlet weak var trashButton: UIButton!
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var firstContainerView: UIView!
+    @IBOutlet weak var secondContrainerView: RotatedView!
     
     var row: Int!
     var objectId: String!
@@ -33,13 +37,11 @@ class EventTableViewCell: FoldingCell {
         
         foregroundView.layer.cornerRadius = 10
         foregroundView.layer.masksToBounds = true
+        containerView.layer.cornerRadius = 10
+        containerView.layer.masksToBounds = true
         leftView.addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(self.changeColor)) )
         
-        
-        let singleTap = UITapGestureRecognizer(target: self, action: nil)
-        singleTap.numberOfTapsRequired = 1
-        mapView.addGestureRecognizer(singleTap)
-        
+        mapView.addGestureRecognizer( UITapGestureRecognizer(target: self, action: nil) )
         mapView.hidden = true
         
         mapButton.layer.cornerRadius = 13
@@ -83,8 +85,8 @@ class EventTableViewCell: FoldingCell {
                     
                     var region: MKCoordinateRegion = self.mapView.region
                     region.center = (placemark.location?.coordinate)!
-                    region.span.longitudeDelta /= 8.0
-                    region.span.latitudeDelta /= 8.0
+                //    region.span.longitudeDelta /= 8.0
+                //    region.span.latitudeDelta /= 8.0
                     self.mapView.setRegion(region, animated: true)
                     self.mapView.addAnnotation(placemark)
                     

@@ -76,6 +76,8 @@ class EventTableViewController: UITableViewController {
         }
         
         cell.eventNameLabel.text = event.name
+        cell.eventNameLabel2.text = event.name
+        cell.textView.text = event.summary
         
         if let start = event.startDate {
             cell.startDateLabel.text = "\(start)"

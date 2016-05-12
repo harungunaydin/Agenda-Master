@@ -78,6 +78,13 @@ class AuthorizationsViewController: UIViewController {
         
         service.executeQuery(query) { (ticket, object, error) in
             
+            if error != nil {
+                self.dismissViewControllerAnimated(true, completion: {
+                    self.displayAlert("Error", message: "Please check your internet connection")
+                })
+                return
+            }
+            
             if let events = object.items() as? [GTLCalendarEvent] {
                 
                 for event in events {
