@@ -146,12 +146,15 @@ class AuthorizationsViewController: UIViewController {
         
         if let error = error {
             service.authorizer = nil
-            displayAlert("Authentication Error", message: error.localizedDescription)
+            self.displayAlert("Authentication Error", message: error.localizedDescription)
             return
         }
         
         service.authorizer = authResult
         dismissViewControllerAnimated(true, completion: nil)
+        
+        self.fetchEventsFromGoogle()
+        
     }
     
     func displayAlert(title: String, message: String) {

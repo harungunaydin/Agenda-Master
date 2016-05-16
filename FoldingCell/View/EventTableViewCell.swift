@@ -28,6 +28,9 @@ class EventTableViewCell: FoldingCell {
     @IBOutlet weak var firstContainerView: UIView!
     @IBOutlet weak var secondContrainerView: RotatedView!
     
+    weak var tableView: UITableView!
+    
+    
     var row: Int!
     var objectId: String!
     
@@ -61,9 +64,7 @@ class EventTableViewCell: FoldingCell {
         
         allEvents.removeAtIndex(row)
         
-        //Somehow Refresh the Table
-        
-        
+        tableView.reloadData()
         
     }
     
@@ -85,8 +86,7 @@ class EventTableViewCell: FoldingCell {
                     
                     var region: MKCoordinateRegion = self.mapView.region
                     region.center = (placemark.location?.coordinate)!
-                //    region.span.longitudeDelta /= 8.0
-                //    region.span.latitudeDelta /= 8.0
+                    
                     self.mapView.setRegion(region, animated: true)
                     self.mapView.addAnnotation(placemark)
                     
@@ -104,7 +104,7 @@ class EventTableViewCell: FoldingCell {
     func changeColor() {
         
         if self.objectId == nil {
-            print("objectId is nill - changeColor(), EventTableViewCell")
+            print("objectId is nil - changeColor(), EventTableViewCell")
             return
         }
         
@@ -122,9 +122,9 @@ class EventTableViewCell: FoldingCell {
     override func closeAnimation(completion completion: CompletionHandler?) {
         
         mapView.hidden = true
+        biggerMapButton.hidden = true
         super.closeAnimation(completion: completion)
         mapButton.hidden = false
-        biggerMapButton.hidden = true
         
     }
     

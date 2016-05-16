@@ -20,16 +20,13 @@ class EventTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-        createCellHeightsArray()
-        self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
-    }
-    
-    // MARK: configure
-    func createCellHeightsArray() {
         for _ in 0...filteredEvents.count {
             cellHeights.append(kCloseCellHeight)
         }
+        
+        self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        
     }
 
     // MARK: - Table view data source
@@ -53,6 +50,7 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("FoldingCell", forIndexPath: indexPath) as! EventTableViewCell
         
         cell.row = indexPath.row
@@ -80,13 +78,20 @@ class EventTableViewController: UITableViewController {
         cell.textView.text = event.summary
         
         if let start = event.startDate {
+            
+            let format = NSDateFormatter()
+            format.dateFormat = "YYYY-MM-DD"
+            
+            
             cell.startDateLabel.text = "\(start)"
         }
         
         if let end = event.endDate {
             cell.endDateLabel.text = "\(end)"
         }
-
+        
+        cell.tableView = self.tableView
+        print("atadim")
 
         return cell
     }
