@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1qM-Du-8gY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0cn-rv-Emg">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -39,51 +39,126 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Agenda_Master_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qqw-I5-nSL">
-                                <rect key="frame" x="59" y="51" width="256" height="256"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPR-gF-Rjr">
-                                <rect key="frame" x="20" y="303" width="335" height="344"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IG-4S-GgI">
+                                <rect key="frame" x="20" y="20" width="335" height="128"/>
                                 <subviews>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Google_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="uyA-90-ibJ">
-                                        <rect key="frame" x="130" y="63" width="75" height="75"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Agenda_Master_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="iot-AX-zl1">
+                                        <rect key="frame" x="8" y="24" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="Vv0-hc-i3I"/>
+                                            <constraint firstAttribute="width" constant="80" id="w17-Qb-1OD"/>
+                                        </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Link With" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JG2-vK-2lQ">
-                                        <rect key="frame" x="52" y="31" width="230" height="24"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Apple_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="cTV-ej-E9x">
-                                        <rect key="frame" x="52" y="183" width="75" height="75"/>
-                                    </imageView>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Facebook_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="YmQ-yF-G3R">
-                                        <rect key="frame" x="227" y="192" width="55" height="58"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EKa-2x-sP1">
-                                        <rect key="frame" x="98" y="277" width="138" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="DONE"/>
-                                        <connections>
-                                            <segue destination="0cn-rv-Emg" kind="show" id="c7z-dF-fSu"/>
-                                        </connections>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z2f-JA-yWg" customClass="ZFRippleButton" customModule="ZFRippleButton">
+                                        <rect key="frame" x="145" y="49" width="122" height="30"/>
+                                        <state key="normal" title="Link"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="iot-AX-zl1" firstAttribute="top" secondItem="0IG-4S-GgI" secondAttribute="top" constant="24" id="7lq-Jj-VYx"/>
+                                    <constraint firstAttribute="bottom" secondItem="iot-AX-zl1" secondAttribute="bottom" constant="24" id="Ksq-wN-9v8"/>
+                                    <constraint firstItem="iot-AX-zl1" firstAttribute="leading" secondItem="0IG-4S-GgI" secondAttribute="leading" constant="8" id="fGH-nf-g4f"/>
+                                    <constraint firstAttribute="height" constant="128" id="xsI-H5-PsX"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A3s-OG-ZOC">
+                                <rect key="frame" x="20" y="156" width="335" height="128"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Google_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="TiH-Vr-IuM">
+                                        <rect key="frame" x="8" y="24" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="ftN-MH-fgV"/>
+                                            <constraint firstAttribute="width" constant="80" id="w0y-u9-RQ9"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hl3-33-Fnl" customClass="ZFRippleButton" customModule="ZFRippleButton">
+                                        <rect key="frame" x="151" y="49" width="122" height="30"/>
+                                        <state key="normal" title="Link"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="TiH-Vr-IuM" firstAttribute="leading" secondItem="A3s-OG-ZOC" secondAttribute="leading" constant="8" id="BKA-T9-FJa"/>
+                                    <constraint firstItem="TiH-Vr-IuM" firstAttribute="top" secondItem="A3s-OG-ZOC" secondAttribute="top" constant="24" id="G0L-HS-uYH"/>
+                                    <constraint firstAttribute="height" constant="128" id="Kck-kU-Nw5"/>
+                                    <constraint firstAttribute="bottom" secondItem="TiH-Vr-IuM" secondAttribute="bottom" constant="24" id="hJH-fK-FKw"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="osN-qA-GhC">
+                                <rect key="frame" x="20" y="292" width="335" height="128"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Apple_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zgX-fv-3gm">
+                                        <rect key="frame" x="8" y="24" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="qvD-sN-5D6"/>
+                                            <constraint firstAttribute="height" constant="80" id="uaz-pM-fWh"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmC-18-7as" customClass="ZFRippleButton" customModule="ZFRippleButton">
+                                        <rect key="frame" x="153" y="49" width="122" height="30"/>
+                                        <state key="normal" title="Link"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="zgX-fv-3gm" firstAttribute="leading" secondItem="osN-qA-GhC" secondAttribute="leading" constant="8" id="LZz-60-IHQ"/>
+                                    <constraint firstItem="zgX-fv-3gm" firstAttribute="top" secondItem="osN-qA-GhC" secondAttribute="top" constant="24" id="Qvl-iq-tYk"/>
+                                    <constraint firstAttribute="height" constant="128" id="qq2-Ev-vZx"/>
+                                    <constraint firstAttribute="bottom" secondItem="zgX-fv-3gm" secondAttribute="bottom" constant="24" id="rJt-zH-bWw"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-P0-xuF">
+                                <rect key="frame" x="20" y="428" width="335" height="128"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Facebook_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zs1-jO-zIY">
+                                        <rect key="frame" x="8" y="24" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="cwh-l1-MjD"/>
+                                            <constraint firstAttribute="width" constant="80" id="hu7-Cc-Alh"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkm-TR-P6c" customClass="ZFRippleButton" customModule="ZFRippleButton">
+                                        <rect key="frame" x="155" y="49" width="122" height="30"/>
+                                        <state key="normal" title="Link"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="zs1-jO-zIY" firstAttribute="top" secondItem="cKl-P0-xuF" secondAttribute="top" constant="24" id="364-CK-Ahe"/>
+                                    <constraint firstAttribute="bottom" secondItem="zs1-jO-zIY" secondAttribute="bottom" constant="24" id="J0M-69-rD0"/>
+                                    <constraint firstItem="zs1-jO-zIY" firstAttribute="leading" secondItem="cKl-P0-xuF" secondAttribute="leading" constant="8" id="ajx-Sr-YNv"/>
+                                    <constraint firstAttribute="height" constant="128" id="s6J-Ci-ZJF"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="osN-qA-GhC" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="417-C2-19j"/>
+                            <constraint firstItem="A3s-OG-ZOC" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="5YP-Ug-edk"/>
+                            <constraint firstItem="0IG-4S-GgI" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="Boc-NA-RNg"/>
+                            <constraint firstItem="A3s-OG-ZOC" firstAttribute="top" secondItem="JpI-OI-tWy" secondAttribute="topMargin" constant="156" id="Hbc-yI-7TM"/>
+                            <constraint firstItem="osN-qA-GhC" firstAttribute="top" secondItem="JpI-OI-tWy" secondAttribute="topMargin" constant="292" id="Nzs-c8-Jzu"/>
+                            <constraint firstItem="A3s-OG-ZOC" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="Uoq-5X-Tz8"/>
+                            <constraint firstItem="osN-qA-GhC" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="amB-Cg-93z"/>
+                            <constraint firstItem="cKl-P0-xuF" firstAttribute="top" secondItem="JpI-OI-tWy" secondAttribute="topMargin" constant="428" id="mET-Af-2Lj"/>
+                            <constraint firstItem="0IG-4S-GgI" firstAttribute="top" secondItem="NSj-MJ-Oo0" secondAttribute="bottom" id="mdc-3v-glb"/>
+                            <constraint firstItem="0IG-4S-GgI" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="qCP-dk-SV9"/>
+                            <constraint firstItem="cKl-P0-xuF" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="qUd-en-FIb"/>
+                            <constraint firstItem="cKl-P0-xuF" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="rXB-t8-VJl"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="appleButton" destination="cTV-ej-E9x" id="6PU-gh-heZ"/>
-                        <outlet property="facebookButton" destination="YmQ-yF-G3R" id="4oJ-FL-5MW"/>
-                        <outlet property="googleButton" destination="uyA-90-ibJ" id="3sr-7N-Ug8"/>
+                        <outlet property="agendaMasterButton" destination="z2f-JA-yWg" id="8Ud-8s-TkQ"/>
+                        <outlet property="appleButton" destination="cmC-18-7as" id="1Zd-OG-xOP"/>
+                        <outlet property="facebookButton" destination="pkm-TR-P6c" id="QDR-TH-NUz"/>
+                        <outlet property="googleButton" destination="hl3-33-Fnl" id="rx0-zU-D9r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="81N-XP-b6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1543.5" y="-262.5"/>
+            <point key="canvasLocation" x="-1937.5" y="-248.5"/>
         </scene>
         <!--Event Table View Controller-->
         <scene sceneID="Q2d-BE-geS">
@@ -147,6 +222,12 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.23921568630000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqJ-VD-GG2">
+                                                    <rect key="frame" x="-20" y="-17" width="600" height="44"/>
+                                                    <items>
+                                                        <navigationItem title="AGENDA MASTER" id="SYy-M1-Q7S"/>
+                                                    </items>
+                                                </navigationBar>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -454,7 +535,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WxO-6i-Q9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-913" y="-248.5"/>
+            <point key="canvasLocation" x="-1260" y="-234.5"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="arS-ch-eyp">
@@ -505,30 +586,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YhK-09-nXS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-188" y="-248"/>
-        </scene>
-        <!--Login View Controller-->
-        <scene sceneID="4pZ-FT-S1E">
-            <objects>
-                <viewController id="8S9-fT-A17" customClass="LoginViewController" customModule="FoldingCell" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gvy-en-ZAD"/>
-                        <viewControllerLayoutGuide type="bottom" id="OVF-XH-LNu"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Lwy-Yq-D2C">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Agenda_Master_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y7U-cr-tVW">
-                                <rect key="frame" x="59" y="51" width="256" height="256"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TUu-OB-QbS" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2013.5" y="-262.5"/>
         </scene>
     </scenes>
     <resources>

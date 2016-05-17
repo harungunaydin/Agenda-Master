@@ -78,11 +78,6 @@ class EventTableViewController: UITableViewController {
         cell.textView.text = event.summary
         
         if let start = event.startDate {
-            
-            let format = NSDateFormatter()
-            format.dateFormat = "YYYY-MM-DD"
-            
-            
             cell.startDateLabel.text = "\(start)"
         }
         
@@ -91,7 +86,6 @@ class EventTableViewController: UITableViewController {
         }
         
         cell.tableView = self.tableView
-        print("atadim")
 
         return cell
     }

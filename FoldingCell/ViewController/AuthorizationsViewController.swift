@@ -9,6 +9,7 @@
 import UIKit
 import GoogleAPIClient
 import GTMOAuth2
+import ZFRippleButton
 
 class AuthorizationsViewController: UIViewController {
     
@@ -17,23 +18,71 @@ class AuthorizationsViewController: UIViewController {
     
     private let service = GTLServiceCalendar()
     private let scopes = [kGTLAuthScopeCalendarReadonly]
-
-    @IBOutlet weak var googleButton: UIImageView!
-    @IBOutlet weak var appleButton: UIImageView!
-    @IBOutlet weak var facebookButton: UIImageView!
+    
+    @IBOutlet weak var agendaMasterButton: ZFRippleButton!
+    @IBOutlet weak var googleButton: ZFRippleButton!
+    @IBOutlet weak var appleButton: ZFRippleButton!
+    @IBOutlet weak var facebookButton: ZFRippleButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let googleTap = UITapGestureRecognizer(target: self, action: #selector(self.linkWithGoogleCalendar) )
-        googleButton.addGestureRecognizer(googleTap)
+        let defaults = NSUserDefaults.standardUserDefaults()
         
-        let appleTap = UITapGestureRecognizer(target: self, action: #selector(self.linkWithIphoneCalendar) )
-        appleButton.addGestureRecognizer(appleTap)
+        if ( defaults.objectForKey("isSignedInAgendaMaster") as! Bool ) == false {
+            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+        } else {
+            agendaMasterButton.setTitle("Sign Out", forState: .Normal)
+        }
         
-        let facebookTap = UITapGestureRecognizer(target: self, action: #selector(self.linkWithFacebookCalendar) )
-        facebookButton.addGestureRecognizer(facebookTap)
+        if ( defaults.objectForKey("isSignedInGoogle") as! Bool ) == false {
+            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+        } else {
+            agendaMasterButton.setTitle("Sign Out", forState: .Normal)
+        }
         
+        if ( defaults.objectForKey("isSignedInApple") as! Bool ) == false {
+            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+        } else {
+            agendaMasterButton.hidden = true
+        }
+        
+        if ( defaults.objectForKey("isSignedInFacebook") as! Bool ) == false {
+            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+        } else {
+            agendaMasterButton.setTitle("Sign Out", forState: .Normal)
+        }
+        
+        
+        agendaMasterButton.addTarget(nil, action: #selector(self.didTappedAgendaMasterButton) , forControlEvents: UIControlEvents.TouchUpInside)
+        googleButton.addTarget(nil, action: #selector(self.didTappedGoogleButton) , forControlEvents: UIControlEvents.TouchUpInside)
+        appleButton.addTarget(nil, action: #selector(self.didTappedAppleButton) , forControlEvents: UIControlEvents.TouchUpInside)
+        facebookButton.addTarget(nil, action: #selector(self.didTappedFacebookButton) , forControlEvents: UIControlEvents.TouchUpInside)
+        
+        
+    }
+    
+    func didTappedAgendaMasterButton() {
+        
+    }
+    
+    func didTappedGoogleButton() {
+        
+        if googleButton.titleLabel!.text == "Sign In" {
+            self.linkWithGoogleCalendar()
+        } else {
+            NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInGoogle")
+        }
+        
+        
+    }
+    
+    func didTappedAppleButton() {
+        
+    }
+    
+    func didTappedFacebookButton() {
         
     }
     
@@ -43,9 +92,16 @@ class AuthorizationsViewController: UIViewController {
             service.authorizer = auth
         }
         
-        if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
-            self.displayAlert("Already Linked", message: "This account is already linked with Google Calendar. Fetching new Events...")
-            self.fetchEventsFromGoogle()
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if ( defaults.objectForKey("isSignedInGoogle") as! Bool ) == true {
+            
+            if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
+                print("Error!!! - Already signed in")
+            } else {
+                presentViewController( createAuthController(), animated: true, completion: nil )
+            }
+            
         } else {
             presentViewController( createAuthController(), animated: true, completion: nil )
         }
@@ -153,6 +209,9 @@ class AuthorizationsViewController: UIViewController {
         service.authorizer = authResult
         dismissViewControllerAnimated(true, completion: nil)
         
+        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "isSignedInGoogle")
+        googleButton.setTitle("Sign Out", forState: .Normal)
+        
         self.fetchEventsFromGoogle()
         
     }
@@ -170,21 +229,20 @@ class AuthorizationsViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

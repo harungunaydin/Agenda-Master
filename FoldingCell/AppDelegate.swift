@@ -23,6 +23,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sources.append( EventSource(name: "Google", logo: UIImage(named: "Google_Logo.png" )! ) )
         sources.append( EventSource(name: "Apple", logo: UIImage(named: "Apple_Logo.png" )! ) )
         sources.append( EventSource(name: "Facebook", logo: UIImage(named: "Facebook_Logo.png" )! ) )
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if defaults.objectForKey("firstTimeCheck") == nil {
+            print("First Time")
+            defaults.setObject(false, forKey: "firstTimeCheck")
+            
+            defaults.setObject(false, forKey: "isSignedInAgendaMaster")
+            defaults.setObject(false, forKey: "isSignedInGoogle")
+            defaults.setObject(false, forKey: "isSignedInApple")
+            defaults.setObject(false, forKey: "isSignedInFacebook")
+            
+        }
+        
         return true
     }
 
