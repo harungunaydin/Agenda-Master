@@ -9,7 +9,19 @@ class EventTableViewController: UITableViewController {
     let kCloseCellHeight: CGFloat = 179
     let kOpenCellHeight: CGFloat = 488
     
+    let refreshController: UIRefreshControl = UIRefreshControl()
+    
     var cellHeights = [CGFloat]()
+    
+    func updateFilteredEventsArray() {
+        
+        filteredEvents = allEvents
+        print("count = \(filteredEvents.count)")
+        
+        for _ in 0...filteredEvents.count {
+            cellHeights.append(kCloseCellHeight)
+        }
+    }
     
     func refreshTable() {
         
@@ -17,16 +29,47 @@ class EventTableViewController: UITableViewController {
         
     }
     
+    func pullEventsAndRefresh() {
+        
+        dispatch_async(dispatch_get_main_queue() ,  {
+            
+            AuthorizationsViewController().pullEvents()
+            
+        })
+        
+        
+        dispatch_async(dispatch_get_main_queue() ,  {
+            
+            self.refreshTable()
+            self.refreshController.endRefreshing()
+            
+        })
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
         
-        for _ in 0...filteredEvents.count {
-            cellHeights.append(kCloseCellHeight)
-        }
+        eventTableView = self.tableView
+        
+        self.refreshController.attributedTitle = NSAttributedString(string: "Pull to Update")
+        self.refreshController.addTarget(nil, action: #selector(self.pullEventsAndRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(self.refreshController)
+        
         
         self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.updateFilteredEventsArray()
+            self.refreshTable()
+        
+        })
     }
 
     // MARK: - Table view data source
@@ -67,7 +110,6 @@ class EventTableViewController: UITableViewController {
         // set LeftView backgroundColor
         if let ind = defaults.objectForKey("colorIndexForCellForId_" + cell.objectId) as? Int {
             cell.leftView.backgroundColor = cellLeftViewColors[ind]
-            
         } else {
             defaults.setObject(0, forKey: "colorIndexForCellForId_" + cell.objectId)
             cell.leftView.backgroundColor = cellLeftViewColors[0]
@@ -123,6 +165,10 @@ class EventTableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier != "_BigMap" {
+            return
+        }
         
         if let destinationVC = segue.destinationViewController as? MapViewController {
             print("asdf")

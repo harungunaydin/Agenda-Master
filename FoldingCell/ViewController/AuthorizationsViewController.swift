@@ -10,6 +10,7 @@ import UIKit
 import GoogleAPIClient
 import GTMOAuth2
 import ZFRippleButton
+import EventKit
 
 class AuthorizationsViewController: UIViewController {
     
@@ -24,6 +25,8 @@ class AuthorizationsViewController: UIViewController {
     @IBOutlet weak var appleButton: ZFRippleButton!
     @IBOutlet weak var facebookButton: ZFRippleButton!
     
+    var count: Int = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,21 +40,21 @@ class AuthorizationsViewController: UIViewController {
         }
         
         if ( defaults.objectForKey("isSignedInGoogle") as! Bool ) == false {
-            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+            googleButton.setTitle("Sign In", forState: .Normal)
         } else {
-            agendaMasterButton.setTitle("Sign Out", forState: .Normal)
+            googleButton.setTitle("Sign Out", forState: .Normal)
         }
         
         if ( defaults.objectForKey("isSignedInApple") as! Bool ) == false {
-            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+            appleButton.setTitle("Sign In", forState: .Normal)
         } else {
-            agendaMasterButton.hidden = true
+            appleButton.hidden = true
         }
         
         if ( defaults.objectForKey("isSignedInFacebook") as! Bool ) == false {
-            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+            facebookButton.setTitle("Sign In", forState: .Normal)
         } else {
-            agendaMasterButton.setTitle("Sign Out", forState: .Normal)
+            facebookButton.setTitle("Sign Out", forState: .Normal)
         }
         
         
@@ -72,14 +75,17 @@ class AuthorizationsViewController: UIViewController {
         if googleButton.titleLabel!.text == "Sign In" {
             self.linkWithGoogleCalendar()
         } else {
+            service.authorizer = nil
             NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInGoogle")
+            googleButton.setTitle("Sign In", forState: .Normal)
+            self.displayAlert("Successfull", message: "You have successfully logged out from Google")
         }
         
         
     }
     
     func didTappedAppleButton() {
-        
+        self.linkWithIphoneCalendar()
     }
     
     func didTappedFacebookButton() {
@@ -99,6 +105,8 @@ class AuthorizationsViewController: UIViewController {
             if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
                 print("Error!!! - Already signed in")
             } else {
+                defaults.setObject(false, forKey: "isSignedInGoogle")
+                service.authorizer = nil
                 presentViewController( createAuthController(), animated: true, completion: nil )
             }
             
@@ -110,6 +118,24 @@ class AuthorizationsViewController: UIViewController {
     
     func linkWithIphoneCalendar() {
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        let eventStore = EKEventStore()
+        eventStore.requestAccessToEntityType(.Event) {(granted, error) in
+            
+            if granted == false {
+                defaults.setObject(false, forKey: "isSignedInApple")
+            } else {
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.appleButton.hidden = true
+                    defaults.setObject(true, forKey: "isSignedInApple")
+                })
+                
+            }
+    
+        }
+        
     }
     
     func linkWithFacebookCalendar() {
@@ -120,7 +146,99 @@ class AuthorizationsViewController: UIViewController {
         
     }
     
+    func checkCount() {
+        count += 1
+        if count == 2 {
+            print("---Finished Pulling Events---")
+            eventTableView.reloadData()
+        }
+    }
+    
+    func pullEvents() {
+        
+        
+        print("---Started Pulling Events---")
+        count = 0
+        
+        if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName( kKeychainItemName, clientID: kClientID, clientSecret: nil) {
+            service.authorizer = auth
+        }
+        
+        allEvents.removeAll()
+        filteredEvents.removeAll()
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInGoogle") as! Bool ) == true {
+                self.fetchEventsFromGoogle()
+            }
+
+        })
+        
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInApple") as! Bool ) == true {
+                self.fetchEventsFromIphoneCalendar()
+            }
+            
+        })
+        
+    }
+    
+    func fetchEventsFromIphoneCalendar() {
+        
+        switch EKEventStore.authorizationStatusForEntityType(.Event) {
+            
+            case .Authorized:
+                
+                let eventStore = EKEventStore()
+                
+                let events = eventStore.eventsMatchingPredicate( eventStore.predicateForEventsWithStartDate(NSDate(), endDate: NSDate(timeIntervalSinceNow: +30*24*3600), calendars: [eventStore.defaultCalendarForNewEvents]) )
+                
+                for event in events {
+                    
+                    let newEvent = Event()
+                    newEvent.startDate = event.startDate
+                    newEvent.endDate = event.endDate
+                    newEvent.objectId = event.eventIdentifier
+                    newEvent.location = event.location
+                    newEvent.source = sources[2] // Source: Apple
+                    
+                    if let start = newEvent.startDate {
+                        if let end = newEvent.endDate {
+                            newEvent.duration = end.timeIntervalSinceDate(start)
+                        }
+                    }
+                    
+                    newEvent.name = event.title
+                    newEvent.summary = event.description
+                    
+                    allEvents.append(newEvent)
+                    
+                }
+                
+                count += 1
+                
+                break
+            
+            
+            default: return
+        }
+        
+    }
+    
     func fetchEventsFromGoogle() {
+        
+        if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
+            
+        } else {
+            print("Error!!! - Signed in but could not authorize. fetchEventsFromGoogle - AuthorizationsViewController")
+            googleButton.setTitle("Sign In", forState: .Normal)
+            NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInGoogle")
+            checkCount()
+            return
+        }
         
         print("fetchEventsFromGoogle")
         
@@ -129,8 +247,6 @@ class AuthorizationsViewController: UIViewController {
         query.timeMin = GTLDateTime(date: NSDate(), timeZone: NSTimeZone.localTimeZone() )
         query.singleEvents = true
         query.orderBy = kGTLCalendarOrderByStartTime
-        
-        allEvents.removeAll()
         
         service.executeQuery(query) { (ticket, object, error) in
             
@@ -175,15 +291,12 @@ class AuthorizationsViewController: UIViewController {
                     newEvent.location = event.location
                     newEvent.objectId = event.identifier
                     
-                    
                     allEvents.append(newEvent)
                 }
-                
-                // Delete this line when the time comes
-                filteredEvents = allEvents
             }
             
             print("fetchEventsFromGoogle - Done")
+            self.count += 1
             
         }
         
@@ -211,8 +324,6 @@ class AuthorizationsViewController: UIViewController {
         
         NSUserDefaults.standardUserDefaults().setObject(true, forKey: "isSignedInGoogle")
         googleButton.setTitle("Sign Out", forState: .Normal)
-        
-        self.fetchEventsFromGoogle()
         
     }
     

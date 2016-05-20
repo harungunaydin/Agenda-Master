@@ -36,6 +36,7 @@
 		230EE4FD1CDF1381007AF656 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4E21CDF1381007AF656 /* LoginViewController.swift */; };
 		231BD26B1CDF14B400178EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231BD26A1CDF14B400178EFE /* AppDelegate.swift */; };
 		23375E131CE30B390070D9DE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23375E121CE30B390070D9DE /* MapViewController.swift */; };
+		238207E41CEC117700E3715A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238207E31CEC117700E3715A /* FilterViewController.swift */; };
 		23C4AB511CE01307009249F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C4AB501CE01307009249F3 /* MapKit.framework */; };
 		8498513F1C5639F9006FA400 /* FoldingCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498513E1C5639F9006FA400 /* FoldingCellTests.swift */; };
 		AC147A9000C81CE584EC64CE /* Pods_FoldingCell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1208C0D98C7F0F54F7CF580C /* Pods_FoldingCell.framework */; };
@@ -95,13 +96,14 @@
 		230EE4E21CDF1381007AF656 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		231BD26A1CDF14B400178EFE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23375E121CE30B390070D9DE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		238207E31CEC117700E3715A /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		23A5DDCA7F0CCD829C3A66AB /* Pods-FoldingCell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoldingCell.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoldingCell/Pods-FoldingCell.debug.xcconfig"; sourceTree = "<group>"; };
 		23C4AB501CE01307009249F3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		23C4AB521CE01334009249F3 /* FoldingCell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FoldingCell.entitlements; sourceTree = "<group>"; };
 		73B1067618DDAE8ADAF1A593 /* Pods-FoldingCell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoldingCell.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoldingCell/Pods-FoldingCell.release.xcconfig"; sourceTree = "<group>"; };
 		840B984B1C33FE660081B926 /* FoldingCellFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FoldingCellFramework.h; sourceTree = "<group>"; };
 		840B984D1C33FE660081B926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		847A58041C294F750028FB84 /* FoldingCell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoldingCell.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		847A58041C294F750028FB84 /* Agenda Master.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agenda Master.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8498513C1C5639F9006FA400 /* FoldingCellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoldingCellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8498513E1C5639F9006FA400 /* FoldingCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldingCellTests.swift; sourceTree = "<group>"; };
 		849851401C5639F9006FA400 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				230EE4E11CDF1381007AF656 /* EventTableViewController.swift */,
 				23375E121CE30B390070D9DE /* MapViewController.swift */,
 				230EE4E21CDF1381007AF656 /* LoginViewController.swift */,
+				238207E31CEC117700E3715A /* FilterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -262,7 +265,7 @@
 		847A58051C294F750028FB84 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				847A58041C294F750028FB84 /* FoldingCell.app */,
+				847A58041C294F750028FB84 /* Agenda Master.app */,
 				8498513C1C5639F9006FA400 /* FoldingCellTests.xctest */,
 			);
 			name = Products;
@@ -298,7 +301,7 @@
 			);
 			name = FoldingCell;
 			productName = FoldingCell;
-			productReference = 847A58041C294F750028FB84 /* FoldingCell.app */;
+			productReference = 847A58041C294F750028FB84 /* Agenda Master.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8498513B1C5639F9006FA400 /* FoldingCellTests */ = {
@@ -463,6 +466,7 @@
 				230EE4E71CDF1381007AF656 /* EventSource.swift in Sources */,
 				23375E131CE30B390070D9DE /* MapViewController.swift in Sources */,
 				231BD26B1CDF14B400178EFE /* AppDelegate.swift in Sources */,
+				238207E41CEC117700E3715A /* FilterViewController.swift in Sources */,
 				230EE4FA1CDF1381007AF656 /* EventTableViewCell.swift in Sources */,
 				230EE4FD1CDF1381007AF656 /* LoginViewController.swift in Sources */,
 				230EE4FC1CDF1381007AF656 /* EventTableViewController.swift in Sources */,
@@ -603,7 +607,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Agenda-Master.ci103.harungunaydin";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Agenda Master";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -621,7 +625,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Agenda-Master.ci103.harungunaydin";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Agenda Master";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;

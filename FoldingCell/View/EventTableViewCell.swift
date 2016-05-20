@@ -66,6 +66,8 @@ class EventTableViewCell: FoldingCell {
         
         tableView.reloadData()
         
+        
+        
     }
     
     
@@ -86,6 +88,7 @@ class EventTableViewCell: FoldingCell {
                     
                     var region: MKCoordinateRegion = self.mapView.region
                     region.center = (placemark.location?.coordinate)!
+                    region.span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
                     
                     self.mapView.setRegion(region, animated: true)
                     self.mapView.addAnnotation(placemark)

@@ -12,6 +12,7 @@ import CoreData
 var allEvents = [Event]()
 var filteredEvents = [Event]()
 var sources = [EventSource]()
+var eventTableView = UITableView()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-       
+        
+        print("asdf")
+        sources.append( EventSource(name: "Agenda Master", logo: UIImage(named: "Agenda_Master_Logo.png")! ) )
         sources.append( EventSource(name: "Google", logo: UIImage(named: "Google_Logo.png" )! ) )
         sources.append( EventSource(name: "Apple", logo: UIImage(named: "Apple_Logo.png" )! ) )
         sources.append( EventSource(name: "Facebook", logo: UIImage(named: "Facebook_Logo.png" )! ) )
@@ -35,7 +38,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.setObject(false, forKey: "isSignedInApple")
             defaults.setObject(false, forKey: "isSignedInFacebook")
             
+            defaults.setObject(allEvents, forKey: "allEvents")
+            
         }
+        
+        if let events = defaults.objectForKey("allEvents") as? [Event] {
+            allEvents = events
+        } else {
+            print("There is a problem - didFinishLaunchingWithOptions, AppDelegate")
+        }
+        
+        AuthorizationsViewController().pullEvents()
         
         return true
     }
