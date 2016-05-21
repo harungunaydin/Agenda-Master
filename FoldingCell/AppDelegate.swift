@@ -12,7 +12,8 @@ import CoreData
 var allEvents = [Event]()
 var filteredEvents = [Event]()
 var sources = [EventSource]()
-var eventTableView = UITableView()
+
+var eventTable = EventTableViewController()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.setObject(false, forKey: "isSignedInApple")
             defaults.setObject(false, forKey: "isSignedInFacebook")
             
+            defaults.setObject(true, forKey: "Agenda Master_filtered")
+            defaults.setObject(true, forKey: "Google_filtered")
+            defaults.setObject(true, forKey: "Apple_filtered")
+            defaults.setObject(true, forKey: "Facebook_filtered")
+            
             defaults.setObject(allEvents, forKey: "allEvents")
             
         }
@@ -48,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("There is a problem - didFinishLaunchingWithOptions, AppDelegate")
         }
         
-        AuthorizationsViewController().pullEvents()
         
         return true
     }

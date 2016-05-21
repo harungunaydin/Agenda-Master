@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 
+var biggerMapView = MKMapView()
+
 class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!

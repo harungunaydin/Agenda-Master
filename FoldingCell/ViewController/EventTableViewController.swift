@@ -3,61 +3,27 @@
 //
 
 import UIKit
+import MapKit
 
 class EventTableViewController: UITableViewController {
     
     let kCloseCellHeight: CGFloat = 179
     let kOpenCellHeight: CGFloat = 488
     
-    let refreshController: UIRefreshControl = UIRefreshControl()
+    let eventLimit = 100
     
     var cellHeights = [CGFloat]()
-    
-    func updateFilteredEventsArray() {
-        
-        filteredEvents = allEvents
-        print("count = \(filteredEvents.count)")
-        
-        for _ in 0...filteredEvents.count {
-            cellHeights.append(kCloseCellHeight)
-        }
-    }
-    
-    func refreshTable() {
-        
-        tableView.reloadData()
-        
-    }
-    
-    func pullEventsAndRefresh() {
-        
-        dispatch_async(dispatch_get_main_queue() ,  {
-            
-            AuthorizationsViewController().pullEvents()
-            
-        })
-        
-        
-        dispatch_async(dispatch_get_main_queue() ,  {
-            
-            self.refreshTable()
-            self.refreshController.endRefreshing()
-            
-        })
-        
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        eventTableView = self.tableView
-        
-        self.refreshController.attributedTitle = NSAttributedString(string: "Pull to Update")
-        self.refreshController.addTarget(nil, action: #selector(self.pullEventsAndRefresh), forControlEvents: UIControlEvents.ValueChanged)
-        tableView.addSubview(self.refreshController)
-        
-        
         self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        
+        
+        eventTable = self
+        
+        AuthorizationsViewController().pullEvents()
         
     }
     
@@ -66,26 +32,86 @@ class EventTableViewController: UITableViewController {
         
         dispatch_async(dispatch_get_main_queue(), {
             
-            self.updateFilteredEventsArray()
-            self.refreshTable()
-        
+            self.prepareForReload()
+            self.tableView.reloadData()
+            
         })
     }
-
-    // MARK: - Table view data source
+    
+    func prepareForReload() {
+        
+        filteredEvents.removeAll()
+        for event in allEvents {
+            
+            if NSUserDefaults.standardUserDefaults().objectForKey( event.source.name + "_filtered" ) as! Bool {
+                
+                if let isDeleted = NSUserDefaults.standardUserDefaults().objectForKey("deletedEventForId_" + event.objectId) as? Bool {
+                    
+                    if isDeleted == false {
+                        filteredEvents.append(event)
+                    }
+                    
+                } else {
+                    filteredEvents.append(event)
+                }
+                
+            }
+            
+            // EVENT LIMIT
+            if filteredEvents.count == self.eventLimit {
+                break
+            }
+            
+        }
+        
+        filteredEvents.sortInPlace { a , b in
+            
+            if b.startDate == nil {
+                return false
+            } else if a.startDate == nil {
+                return true
+            }
+            
+            let x = a.startDate.timeIntervalSince1970
+            let y = b.startDate.timeIntervalSince1970
+            
+            if x < y {
+                return true
+            } else if x > y {
+                return false
+            } else {
+                
+                if b.endDate == nil {
+                    return false
+                } else if a.endDate == nil {
+                    return true
+                }
+                
+                return a.endDate.timeIntervalSince1970 < b.endDate.timeIntervalSince1970
+            }
+            
+        }
+        
+        cellHeights.removeAll()
+        for _ in 0...filteredEvents.count {
+            cellHeights.append(kCloseCellHeight)
+        }
+        
+        
+    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("size of the table => \(filteredEvents.count)")
         return filteredEvents.count
     }
 
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         if cell is FoldingCell {
             let foldingCell = cell as! FoldingCell
             foldingCell.backgroundColor = UIColor.clearColor()
             
             if cellHeights[indexPath.row] == kCloseCellHeight {
-                foldingCell.selectedAnimation(false, animated: false, completion:nil)
+                foldingCell.selectedAnimation(false, animated: false, completion: nil)
             } else {
                 foldingCell.selectedAnimation(true, animated: false, completion: nil)
             }
@@ -127,7 +153,15 @@ class EventTableViewController: UITableViewController {
             cell.endDateLabel.text = "\(end)"
         }
         
-        cell.tableView = self.tableView
+        if event.location == nil || event.location.characters.count < 5 {
+            cell.mapButton.hidden = true
+            cell.shouldHideMapButton = true
+            cell.noLocationLabel.hidden = false
+        } else {
+            
+            cell.shouldHideMapButton = false
+            cell.noLocationLabel.hidden = true
+        }
 
         return cell
     }
@@ -141,6 +175,8 @@ class EventTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! EventTableViewCell
+        
+        cell.mapButton.hidden = cell.shouldHideMapButton
         
         if cell.isAnimating() {
             return
@@ -163,27 +199,5 @@ class EventTableViewController: UITableViewController {
         }, completion: nil)
 
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        if segue.identifier != "_BigMap" {
-            return
-        }
-        
-        if let destinationVC = segue.destinationViewController as? MapViewController {
-            print("asdf")
-            
-            let indexPath = NSIndexPath(forItem: sender!.tag, inSection: 0)
-            
-            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? EventTableViewCell {
-                destinationVC.mapView = cell.mapView
-            }
-            
-        } else {
-            print("Error occured - prepareForSegue, EventTableViewController")
-        }
-        
-    }
-    
     
 }

@@ -27,12 +27,12 @@ class EventTableViewCell: FoldingCell {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var firstContainerView: UIView!
     @IBOutlet weak var secondContrainerView: RotatedView!
-    
-    weak var tableView: UITableView!
+    @IBOutlet weak var noLocationLabel: UILabel!
     
     
     var row: Int!
     var objectId: String!
+    var shouldHideMapButton: Bool!
     
     override func awakeFromNib() {
         
@@ -53,6 +53,7 @@ class EventTableViewCell: FoldingCell {
         mapButton.addTarget(self, action: #selector(self.setupMapView), forControlEvents: UIControlEvents.TouchUpInside)
         
         biggerMapButton.hidden = true
+        biggerMapButton.addTarget(self, action: #selector(self.setupBiggerMapView), forControlEvents: UIControlEvents.TouchUpInside)
         
     }
     
@@ -60,18 +61,46 @@ class EventTableViewCell: FoldingCell {
         
         print("deleteEvent()")
         
-        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedCellForId_" + self.objectId )
+        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedEventForId_" + self.objectId )
         
-        allEvents.removeAtIndex(row)
+        filteredEvents.removeAtIndex(row)
         
-        tableView.reloadData()
+        eventTable.tableView.reloadData()
         
+    }
+    
+    func setupBiggerMapView() {
         
+        CLGeocoder().geocodeAddressString(filteredEvents[row].location) { (placemarks, error) in
+            
+            if let placemarks = placemarks {
+                
+                if placemarks.count > 0 {
+                    
+                    let placemark = MKPlacemark(placemark: placemarks[0])
+                    
+                    var region: MKCoordinateRegion = self.mapView.region
+                    region.center = (placemark.location?.coordinate)!
+                    region.span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+                    
+                    biggerMapView.setRegion(region, animated: true)
+                    biggerMapView.addAnnotation(placemark)
+                    
+                }
+                
+                
+            }
+            
+        }
         
     }
     
     
     func setupMapView() {
+        
+        if shouldHideMapButton == true {
+            fatalError("YO WTF??!!!?? - setupMapView() , EventTableViewCell.swift")
+        }
         
         mapButton.hidden = true
         biggerMapButton.hidden = false
@@ -98,9 +127,10 @@ class EventTableViewCell: FoldingCell {
                 
             }
             
+            self.mapView.hidden = false
+            
         }
         
-        mapView.hidden = false
         
     }
     
@@ -127,7 +157,7 @@ class EventTableViewCell: FoldingCell {
         mapView.hidden = true
         biggerMapButton.hidden = true
         super.closeAnimation(completion: completion)
-        mapButton.hidden = false
+        mapButton.hidden = self.shouldHideMapButton
         
     }
     

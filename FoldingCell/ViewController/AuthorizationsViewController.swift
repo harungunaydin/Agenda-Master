@@ -130,6 +130,7 @@ class AuthorizationsViewController: UIViewController {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.appleButton.hidden = true
                     defaults.setObject(true, forKey: "isSignedInApple")
+                    self.pullEvents()
                 })
                 
             }
@@ -147,18 +148,25 @@ class AuthorizationsViewController: UIViewController {
     }
     
     func checkCount() {
-        count += 1
-        if count == 2 {
+        self.count += 1
+        print("count = \(self.count)")
+        if self.count == 2 {
             print("---Finished Pulling Events---")
-            eventTableView.reloadData()
+            print("#Events = \(allEvents.count)")
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                eventTable.prepareForReload()
+                print("eventTable.tableView.reloadData()")
+                eventTable.tableView.reloadData()
+                
+            })
         }
     }
     
     func pullEvents() {
         
-        
         print("---Started Pulling Events---")
-        count = 0
+        self.count = 0
         
         if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName( kKeychainItemName, clientID: kClientID, clientSecret: nil) {
             service.authorizer = auth
@@ -171,6 +179,9 @@ class AuthorizationsViewController: UIViewController {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInGoogle") as! Bool ) == true {
                 self.fetchEventsFromGoogle()
+            } else {
+                print("Google SignIn - NO")
+                self.checkCount()
             }
 
         })
@@ -180,6 +191,9 @@ class AuthorizationsViewController: UIViewController {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInApple") as! Bool ) == true {
                 self.fetchEventsFromIphoneCalendar()
+            } else {
+                print("Apple SignIn - NO")
+                self.checkCount()
             }
             
         })
@@ -195,6 +209,8 @@ class AuthorizationsViewController: UIViewController {
                 let eventStore = EKEventStore()
                 
                 let events = eventStore.eventsMatchingPredicate( eventStore.predicateForEventsWithStartDate(NSDate(), endDate: NSDate(timeIntervalSinceNow: +30*24*3600), calendars: [eventStore.defaultCalendarForNewEvents]) )
+                
+                print("AppleEventsCount = \(events.count)")
                 
                 for event in events {
                     
@@ -212,18 +228,18 @@ class AuthorizationsViewController: UIViewController {
                     }
                     
                     newEvent.name = event.title
-                    newEvent.summary = event.description
+                    newEvent.summary = event.notes
                     
                     allEvents.append(newEvent)
                     
                 }
-                
-                count += 1
-                
+                self.checkCount()
                 break
             
-            
-            default: return
+            default:
+                
+                self.checkCount()
+                break
         }
         
     }
@@ -231,12 +247,11 @@ class AuthorizationsViewController: UIViewController {
     func fetchEventsFromGoogle() {
         
         if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
-            
         } else {
             print("Error!!! - Signed in but could not authorize. fetchEventsFromGoogle - AuthorizationsViewController")
             googleButton.setTitle("Sign In", forState: .Normal)
             NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInGoogle")
-            checkCount()
+            self.checkCount()
             return
         }
         
@@ -296,7 +311,7 @@ class AuthorizationsViewController: UIViewController {
             }
             
             print("fetchEventsFromGoogle - Done")
-            self.count += 1
+            self.checkCount()
             
         }
         
@@ -321,6 +336,8 @@ class AuthorizationsViewController: UIViewController {
         
         service.authorizer = authResult
         dismissViewControllerAnimated(true, completion: nil)
+        
+        self.pullEvents()
         
         NSUserDefaults.standardUserDefaults().setObject(true, forKey: "isSignedInGoogle")
         googleButton.setTitle("Sign Out", forState: .Normal)
