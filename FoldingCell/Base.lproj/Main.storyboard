@@ -149,6 +149,13 @@
                                     <constraint firstAttribute="bottom" secondItem="zs1-jO-zIY" secondAttribute="bottom" constant="24" id="qbt-qf-QUX"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBn-Wy-V7t">
+                                <rect key="frame" x="306" y="617" width="54" height="30"/>
+                                <state key="normal" title="Dismiss"/>
+                                <connections>
+                                    <action selector="didTappedDismissButton:" destination="1qM-Du-8gY" eventType="touchUpInside" id="Bm4-kG-D0t"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -176,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="81N-XP-b6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-831.5" y="-376.5"/>
+            <point key="canvasLocation" x="-1028.5" y="-435.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pLG-cu-TcD">
@@ -291,7 +298,7 @@
                                                             </constraints>
                                                             <state key="normal" title="SHOW LOCATION"/>
                                                         </button>
-                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xiD-SC-mNs">
+                                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xiD-SC-mNs">
                                                             <rect key="frame" x="0.0" y="0.0" width="560" height="165"/>
                                                         </mapView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eGO-GX-hEQ">
@@ -313,16 +320,20 @@
                                                                 <constraint firstAttribute="width" constant="200" id="smj-WR-N9I"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
+                                                        <constraint firstItem="xiD-SC-mNs" firstAttribute="top" secondItem="stA-YF-Roj" secondAttribute="top" id="8lM-RC-dQn"/>
                                                         <constraint firstAttribute="trailing" secondItem="eGO-GX-hEQ" secondAttribute="trailing" constant="8" id="C0n-37-AO7"/>
                                                         <constraint firstItem="REt-bw-fzJ" firstAttribute="centerX" secondItem="stA-YF-Roj" secondAttribute="centerX" id="Lby-DZ-hmh"/>
                                                         <constraint firstItem="eGO-GX-hEQ" firstAttribute="top" secondItem="stA-YF-Roj" secondAttribute="top" constant="8" id="XvL-wJ-2Wt"/>
+                                                        <constraint firstAttribute="trailing" secondItem="xiD-SC-mNs" secondAttribute="trailing" id="ajG-48-V6j"/>
+                                                        <constraint firstAttribute="bottom" secondItem="xiD-SC-mNs" secondAttribute="bottom" id="bRV-RK-ONJ"/>
                                                         <constraint firstItem="lhy-TV-V2c" firstAttribute="centerX" secondItem="stA-YF-Roj" secondAttribute="centerX" id="izf-gE-57c"/>
+                                                        <constraint firstItem="xiD-SC-mNs" firstAttribute="leading" secondItem="stA-YF-Roj" secondAttribute="leading" id="lM5-lk-Tvk"/>
                                                         <constraint firstItem="lhy-TV-V2c" firstAttribute="centerY" secondItem="stA-YF-Roj" secondAttribute="centerY" id="qA4-G9-KTu"/>
                                                         <constraint firstItem="REt-bw-fzJ" firstAttribute="centerY" secondItem="stA-YF-Roj" secondAttribute="centerY" id="wyb-NX-sNr"/>
                                                         <constraint firstAttribute="height" constant="165" id="zna-xw-SZ3"/>
@@ -575,7 +586,7 @@
                     <navigationItem key="navigationItem" title="AGENDA MASTER" id="jr9-RO-KXy">
                         <barButtonItem key="leftBarButtonItem" title="Auth" id="VFg-hC-FDF">
                             <connections>
-                                <segue destination="1qM-Du-8gY" kind="show" id="ugf-1m-tCP"/>
+                                <segue destination="1qM-Du-8gY" kind="show" id="XsN-hn-tAr"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Filter" id="fBb-zG-2Vc">
@@ -619,7 +630,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
-                        <outlet property="mapView" destination="tD4-hH-8XB" id="Ke3-IM-Iod"/>
+                        <outlet property="mapView" destination="tD4-hH-8XB" id="BLb-b6-alT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YhK-09-nXS" userLabel="First Responder" sceneMemberID="firstResponder"/>

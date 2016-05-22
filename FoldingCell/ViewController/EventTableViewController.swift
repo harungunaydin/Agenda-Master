@@ -4,38 +4,72 @@
 
 import UIKit
 import MapKit
+import StarWars
 
 class EventTableViewController: UITableViewController {
-    
+
     let kCloseCellHeight: CGFloat = 179
     let kOpenCellHeight: CGFloat = 488
     
     let eventLimit = 100
     
     var cellHeights = [CGFloat]()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
-        
         eventTable = self
+        
+        self.transitioningDelegate = self
         
         AuthorizationsViewController().pullEvents()
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    func didTappedAuthButton() {
         
-        dispatch_async(dispatch_get_main_queue(), {
+        print("didTappedAuthButton")
+        
+        let authVC = self.storyboard!.instantiateViewControllerWithIdentifier("AuthorizationsViewController") as! AuthorizationsViewController
+        
+        let transition: CATransition = CATransition()
+        let timeFunc : CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.duration = 1
+        transition.timingFunction = timeFunc
+        transition.type = kCATransitionReveal
+        transition.subtype = kCATransitionFromLeft
+        
+        self.navigationController!.view.layer.addAnimation(transition, forKey: kCATransition)
+        self.navigationController!.pushViewController(authVC, animated: true)
+        
+    }
+    
+    func cmp( a : Event , b : Event ) -> Bool {
+        if b.startDate == nil {
+            return false
+        } else if a.startDate == nil {
+            return true
+        }
+        
+        let x = a.startDate.timeIntervalSince1970
+        let y = b.startDate.timeIntervalSince1970
+        
+        if x < y {
+            return true
+        } else if x > y {
+            return false
+        } else {
             
-            self.prepareForReload()
-            self.tableView.reloadData()
+            if b.endDate == nil {
+                return false
+            } else if a.endDate == nil {
+                return true
+            }
             
-        })
+            return a.endDate.timeIntervalSince1970 < b.endDate.timeIntervalSince1970
+        }
     }
     
     func prepareForReload() {
@@ -64,33 +98,7 @@ class EventTableViewController: UITableViewController {
             
         }
         
-        filteredEvents.sortInPlace { a , b in
-            
-            if b.startDate == nil {
-                return false
-            } else if a.startDate == nil {
-                return true
-            }
-            
-            let x = a.startDate.timeIntervalSince1970
-            let y = b.startDate.timeIntervalSince1970
-            
-            if x < y {
-                return true
-            } else if x > y {
-                return false
-            } else {
-                
-                if b.endDate == nil {
-                    return false
-                } else if a.endDate == nil {
-                    return true
-                }
-                
-                return a.endDate.timeIntervalSince1970 < b.endDate.timeIntervalSince1970
-            }
-            
-        }
+        filteredEvents = filteredEvents.sort(cmp)
         
         cellHeights.removeAll()
         for _ in 0...filteredEvents.count {
@@ -198,6 +206,20 @@ class EventTableViewController: UITableViewController {
             tableView.endUpdates()
         }, completion: nil)
 
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let destination = segue.destinationViewController
+        destination.transitioningDelegate = self
+    }
+    
+}
+
+extension EventTableViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        print("animationControllerForDismissedController")
+        return StarWarsGLAnimator()
     }
     
 }

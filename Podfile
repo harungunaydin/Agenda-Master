@@ -8,5 +8,5 @@ target 'FoldingCell' do
 	pod 'GTMOAuth2', '~> 1.1.0'
 	pod 'LTMorphingLabel', '~> 0.1.1'
 	pod 'ZFRippleButton', '~> 0.5'
-
+	pod 'StarWars', '~> 1.0'
 end

@@ -46,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             defaults.setObject(allEvents, forKey: "allEvents")
             
+            defaults.setObject(false, forKey: "eventsTableNeedsRefreshing")
+            
         }
         
         if let events = defaults.objectForKey("allEvents") as? [Event] {

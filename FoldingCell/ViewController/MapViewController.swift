@@ -9,19 +9,21 @@
 import UIKit
 import MapKit
 
-var biggerMapView = MKMapView()
+var biggerRegion = MKCoordinateRegion()
+var biggerAnnotation: MKAnnotation!
 
 class MapViewController: UIViewController {
-
-    @IBOutlet weak var mapView: MKMapView!
     
-    @IBAction func doneBarButtonItemDidTapped(sender: AnyObject) {
-        
-        dismissViewControllerAnimated(true, completion: nil)
-        
-    }
+    @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.region = biggerRegion
+        if biggerAnnotation != nil {
+            mapView.addAnnotation(biggerAnnotation)
+        } else {
+            print("Error!!! - Annotation is nil")
+        }
 
         // Do any additional setup after loading the view.
     }

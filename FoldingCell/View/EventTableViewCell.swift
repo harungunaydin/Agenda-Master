@@ -71,26 +71,9 @@ class EventTableViewCell: FoldingCell {
     
     func setupBiggerMapView() {
         
-        CLGeocoder().geocodeAddressString(filteredEvents[row].location) { (placemarks, error) in
-            
-            if let placemarks = placemarks {
-                
-                if placemarks.count > 0 {
-                    
-                    let placemark = MKPlacemark(placemark: placemarks[0])
-                    
-                    var region: MKCoordinateRegion = self.mapView.region
-                    region.center = (placemark.location?.coordinate)!
-                    region.span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-                    
-                    biggerMapView.setRegion(region, animated: true)
-                    biggerMapView.addAnnotation(placemark)
-                    
-                }
-                
-                
-            }
-            
+        biggerRegion = self.mapView.region
+        if self.mapView.annotations.count > 0 {
+            biggerAnnotation = self.mapView.annotations[0]
         }
         
     }
@@ -121,9 +104,7 @@ class EventTableViewCell: FoldingCell {
                     
                     self.mapView.setRegion(region, animated: true)
                     self.mapView.addAnnotation(placemark)
-                    
                 }
-                
                 
             }
             

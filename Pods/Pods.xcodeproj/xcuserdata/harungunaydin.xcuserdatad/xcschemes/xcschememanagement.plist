@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>StarWars.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>ZFRippleButton.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,12 +52,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>228A8785B1C6C6BFE8E1C8D261204DE3</key>
+		<key>16C87537D8284B289C2D445DE936D5B4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27D94AF9A18BB25A744ACCD5BC0A0645</key>
+		<key>228A8785B1C6C6BFE8E1C8D261204DE3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +67,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B78089F68F35927BE87EE0DCF0D11910</key>
+		<key>8C05970F54FCD05C0B84C56B09BE5FAA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,7 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F3DE141BCB1BB82DECD6D792A2CC109F</key>
+		<key>F0C369D39031891FACC396EB2BBE629F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F10FAB07562202180C45F0167F0FFB71</key>
 		<dict>
 			<key>primary</key>
 			<true/>

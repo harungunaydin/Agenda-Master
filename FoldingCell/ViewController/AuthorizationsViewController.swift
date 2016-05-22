@@ -11,8 +11,9 @@ import GoogleAPIClient
 import GTMOAuth2
 import ZFRippleButton
 import EventKit
+import StarWars
 
-class AuthorizationsViewController: UIViewController {
+class AuthorizationsViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
     private let kKeychainItemName = "Google Calendar API"
     private let kClientID = "599334841741-tjcmvmd5lq8ovbnpk58pm4k041njh4do.apps.googleusercontent.com"
@@ -78,7 +79,29 @@ class AuthorizationsViewController: UIViewController {
             service.authorizer = nil
             NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInGoogle")
             googleButton.setTitle("Sign In", forState: .Normal)
-            self.displayAlert("Successfull", message: "You have successfully logged out from Google")
+            self.displayAlert("Successful", message: "You have successfully logged out from Google")
+            
+            var temp = [Event]()
+            for event in allEvents {
+                if event.source.name != "Google" {
+                    temp.append(event)
+                    
+                    print("sourcename = \(event.source.name)")
+                }
+            }
+            
+            allEvents = temp
+            temp.removeAll()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                eventTable.prepareForReload()
+                print("eventTable.tableView.reloadData()")
+                eventTable.tableView.reloadData()
+                
+            })
+            
+            
         }
         
         
@@ -301,7 +324,7 @@ class AuthorizationsViewController: UIViewController {
                     if newEvent.startDate != nil && newEvent.endDate != nil {
                         newEvent.duration = newEvent.endDate.timeIntervalSinceDate(newEvent.startDate)
                     }
-                    newEvent.source = sources[0]
+                    newEvent.source = sources[1]
                     newEvent.summary = event.descriptionProperty
                     newEvent.location = event.location
                     newEvent.objectId = event.identifier
@@ -343,6 +366,10 @@ class AuthorizationsViewController: UIViewController {
         googleButton.setTitle("Sign Out", forState: .Normal)
         
     }
+    @IBAction func didTappedDismissButton(sender: AnyObject) {
+        print("tapped")
+        self.navigationController!.popViewControllerAnimated(true)
+    }
     
     func displayAlert(title: String, message: String) {
         
@@ -363,14 +390,14 @@ class AuthorizationsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let destination = segue.destinationViewController
+        destination.transitioningDelegate = self
+    }
     
-    /*
-     // MARK: - Navigation
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        print("animationControllerForDismissedController")
+        return StarWarsGLAnimator()
+    }
     
 }
