@@ -18,7 +18,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.region = biggerRegion
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.mapView.region = biggerRegion
         if biggerAnnotation != nil {
             mapView.addAnnotation(biggerAnnotation)
         } else {

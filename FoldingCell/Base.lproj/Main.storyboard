@@ -57,10 +57,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IG-4S-GgI">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0IG-4S-GgI">
                                 <rect key="frame" x="20" y="72" width="335" height="128"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Agenda_Master_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="iot-AX-zl1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Agenda_Master_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="iot-AX-zl1">
                                         <rect key="frame" x="8" y="24" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="6XD-Cg-bTX"/>
@@ -73,17 +73,11 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="iot-AX-zl1" secondAttribute="bottom" constant="24" id="0eX-E2-q7h"/>
-                                    <constraint firstItem="iot-AX-zl1" firstAttribute="top" secondItem="0IG-4S-GgI" secondAttribute="top" constant="24" id="0ge-Cz-5bE"/>
-                                    <constraint firstItem="iot-AX-zl1" firstAttribute="leading" secondItem="0IG-4S-GgI" secondAttribute="leading" constant="8" id="LKR-B2-f3o"/>
-                                    <constraint firstAttribute="height" constant="128" id="gbi-3p-pZa"/>
-                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A3s-OG-ZOC">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A3s-OG-ZOC">
                                 <rect key="frame" x="20" y="208" width="335" height="128"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Google_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="TiH-Vr-IuM">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Google_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="TiH-Vr-IuM">
                                         <rect key="frame" x="8" y="24" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="01r-Nb-NnV"/>
@@ -96,17 +90,11 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="TiH-Vr-IuM" secondAttribute="bottom" constant="24" id="7WS-WQ-iIj"/>
-                                    <constraint firstItem="TiH-Vr-IuM" firstAttribute="leading" secondItem="A3s-OG-ZOC" secondAttribute="leading" constant="8" id="OZp-zS-ZSL"/>
-                                    <constraint firstAttribute="height" constant="128" id="Z4F-HK-bb2"/>
-                                    <constraint firstItem="TiH-Vr-IuM" firstAttribute="top" secondItem="A3s-OG-ZOC" secondAttribute="top" constant="24" id="gLN-rO-m2D"/>
-                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="osN-qA-GhC">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="osN-qA-GhC">
                                 <rect key="frame" x="20" y="344" width="335" height="128"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Apple_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zgX-fv-3gm">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Apple_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zgX-fv-3gm">
                                         <rect key="frame" x="8" y="24" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="4Rc-GV-9Cw"/>
@@ -119,71 +107,53 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="zgX-fv-3gm" firstAttribute="top" secondItem="osN-qA-GhC" secondAttribute="top" constant="24" id="G1f-Hv-q4h"/>
-                                    <constraint firstAttribute="height" constant="128" id="HmC-qQ-wiw"/>
-                                    <constraint firstAttribute="bottom" secondItem="zgX-fv-3gm" secondAttribute="bottom" constant="24" id="N4h-ne-9jr"/>
-                                    <constraint firstItem="zgX-fv-3gm" firstAttribute="leading" secondItem="osN-qA-GhC" secondAttribute="leading" constant="8" id="osO-Ec-dUK"/>
-                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-P0-xuF">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKl-P0-xuF">
                                 <rect key="frame" x="20" y="480" width="335" height="128"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Facebook_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zs1-jO-zIY">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Facebook_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="zs1-jO-zIY">
                                         <rect key="frame" x="8" y="24" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="Pqg-u1-GEC"/>
                                             <constraint firstAttribute="width" constant="80" id="udT-bS-6zi"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkm-TR-P6c" customClass="ZFRippleButton" customModule="ZFRippleButton">
-                                        <rect key="frame" x="155" y="49" width="122" height="30"/>
-                                        <state key="normal" title="Link"/>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="zs1-jO-zIY" firstAttribute="leading" secondItem="cKl-P0-xuF" secondAttribute="leading" constant="8" id="das-Qi-Mb0"/>
-                                    <constraint firstItem="zs1-jO-zIY" firstAttribute="top" secondItem="cKl-P0-xuF" secondAttribute="top" constant="24" id="jzN-qE-FnR"/>
-                                    <constraint firstAttribute="height" constant="128" id="nkX-mg-Ljw"/>
-                                    <constraint firstAttribute="bottom" secondItem="zs1-jO-zIY" secondAttribute="bottom" constant="24" id="qbt-qf-QUX"/>
-                                </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBn-Wy-V7t">
-                                <rect key="frame" x="306" y="617" width="54" height="30"/>
-                                <state key="normal" title="Dismiss"/>
-                                <connections>
-                                    <action selector="didTappedDismissButton:" destination="1qM-Du-8gY" eventType="touchUpInside" id="Bm4-kG-D0t"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="A3s-OG-ZOC" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="3bb-jF-5Qb"/>
-                            <constraint firstItem="0IG-4S-GgI" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="CN9-bN-xVm"/>
-                            <constraint firstItem="osN-qA-GhC" firstAttribute="top" secondItem="NSj-MJ-Oo0" secondAttribute="bottom" constant="280" id="KMA-X4-LGj"/>
-                            <constraint firstItem="A3s-OG-ZOC" firstAttribute="top" secondItem="NSj-MJ-Oo0" secondAttribute="bottom" constant="144" id="Lf2-TA-ujQ"/>
-                            <constraint firstItem="A3s-OG-ZOC" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="UXv-7P-Yl2"/>
-                            <constraint firstItem="osN-qA-GhC" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="YC7-NF-jFH"/>
-                            <constraint firstItem="cKl-P0-xuF" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="dgW-Z2-oYw"/>
-                            <constraint firstItem="0IG-4S-GgI" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="hmk-e7-kOE"/>
-                            <constraint firstItem="cKl-P0-xuF" firstAttribute="top" secondItem="NSj-MJ-Oo0" secondAttribute="bottom" constant="416" id="n0c-AY-JzG"/>
-                            <constraint firstItem="0IG-4S-GgI" firstAttribute="top" secondItem="NSj-MJ-Oo0" secondAttribute="bottom" constant="8" id="pQL-82-kGS"/>
-                            <constraint firstItem="cKl-P0-xuF" firstAttribute="leading" secondItem="JpI-OI-tWy" secondAttribute="leadingMargin" id="qde-CV-gW2"/>
-                            <constraint firstItem="osN-qA-GhC" firstAttribute="trailing" secondItem="JpI-OI-tWy" secondAttribute="trailingMargin" id="vX2-Dt-RPN"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="agendaMasterButton" destination="z2f-JA-yWg" id="8Ud-8s-TkQ"/>
                         <outlet property="appleButton" destination="cmC-18-7as" id="1Zd-OG-xOP"/>
-                        <outlet property="facebookButton" destination="pkm-TR-P6c" id="QDR-TH-NUz"/>
                         <outlet property="googleButton" destination="hl3-33-Fnl" id="rx0-zU-D9r"/>
+                        <segue destination="MKY-rd-pqp" kind="show" identifier="_Login_Agenda_Master" id="87i-U7-csh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="81N-XP-b6Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1028.5" y="-435.5"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="fDA-oL-qtX">
+            <objects>
+                <viewController id="MKY-rd-pqp" customClass="LoginViewController" customModule="Agenda_Master" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cep-N3-1D7"/>
+                        <viewControllerLayoutGuide type="bottom" id="BI8-bS-jeX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dJX-qr-a4V">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Qi-zx-4Pr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-594.5" y="-435.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pLG-cu-TcD">
@@ -498,7 +468,7 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTo-hA-eje">
+                                                        <textView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LTo-hA-eje">
                                                             <rect key="frame" x="8" y="51" width="544" height="106"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="106" id="C7W-GQ-EEd"/>

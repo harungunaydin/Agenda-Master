@@ -17,39 +17,80 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     let passwordTextField: UITextField = UITextField()
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        self.performSegueWithIdentifier("_Login", sender: self)
+        
+        dispatch_async(dispatch_get_main_queue() , {
+            self.view.endEditing(true)
+            self.loginButtonDidTapped()
+        })
+        
         return false
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        textField.placeholder = nil
+        dispatch_async(dispatch_get_main_queue() , {
+            textField.placeholder = nil
+        })
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        textField.placeholder = textField.hash == usernameTextFieldHash ? "username" : "password"
+        
+        dispatch_async(dispatch_get_main_queue() , {
+            textField.placeholder = textField.hash == self.usernameTextFieldHash ? "username" : "password"
+        })
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        self.view.endEditing(true)
+        dispatch_async(dispatch_get_main_queue() , {
+            self.view.endEditing(true)
+        })
     }
     
     func login() {
         
-        // Implement this function
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let authorizationsViewController = storyboard.instantiateViewControllerWithIdentifier("AuthorizationsViewController") as! AuthorizationsViewController
+        let url:NSURL = NSURL(string: "http://clockblocked.us/~brian/resources/php/ios_get_tasks.php?username=" + usernameTextField.text! + "&password=" + passwordTextField.text! + "&ios_getcode=bb7427431a38")!
         
-        let curwindow = UIApplication.sharedApplication().keyWindow
-        curwindow?.backgroundColor = UIColor(red: 236.0, green: 238.0, blue: 241.0, alpha: 1.0)
-        curwindow?.rootViewController = authorizationsViewController
-        curwindow?.makeKeyAndVisible()
+        let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        
+        let myQuery = urlSession.dataTaskWithURL(url, completionHandler: {
+            data, response, error -> Void in
+            
+            if error != nil {
+                self.displayAlert("Error", message: "Please check you internet connection")
+            } else {
+                
+                if let content = data {
+                    do {
+                        _ = try NSJSONSerialization.JSONObjectWithData(content, options: NSJSONReadingOptions.MutableContainers)
+                        
+                        NSUserDefaults.standardUserDefaults().setObject(self.usernameTextField.text, forKey: "Agenda_Master_username")
+                        NSUserDefaults.standardUserDefaults().setObject(self.passwordTextField.text, forKey: "Agenda_Master_password")
+                        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "isSignedInAgendaMaster")
+                        
+                        AuthorizationsViewController().pullEvents()
+                        
+                        self.displayAlert("Success", message: "You have succesfully linked your calendar")
+                        
+                        
+                        
+                    } catch {
+                        self.displayAlert("Error", message: "The username and password you entered do not match")
+                    }
+                    
+                    
+                }
+                
+            }
+            
+        })
+        
+        myQuery.resume()
         
     }
     
     func loginButtonDidTapped() {
         
-        if usernameTextField.text == "" || passwordTextField.text == "" {
+        if usernameTextField.text == nil || passwordTextField.text == nil ||  usernameTextField.text == "" || passwordTextField.text == "" {
             self.displayAlert("Error" , message: "Please fill out both fields")
         } else {
             self.login()
@@ -64,66 +105,77 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let topx: CGFloat = 72
-        let topy: CGFloat = 340
-        let height: CGFloat = 35
-        let width: CGFloat = 230
+        dispatch_async(dispatch_get_main_queue(), {
         
-        usernameTextField.frame = CGRectMake(topx,topy,width,height)
-        usernameTextField.placeholder = "username"
-        usernameTextField.backgroundColor = UIColor.clearColor()
-        usernameTextField.autocorrectionType = UITextAutocorrectionType.No
-        usernameTextField.setBottomBorder(UIColor.darkGrayColor())
-        self.usernameTextFieldHash = usernameTextField.hash
+            let topx: CGFloat = 72
+            let topy: CGFloat = 340
+            let height: CGFloat = 35
+            let width: CGFloat = 230
         
-        passwordTextField.frame = CGRectMake(topx,topy+40,width,height)
-        passwordTextField.placeholder = "password"
-        passwordTextField.backgroundColor = UIColor.clearColor()
-        passwordTextField.secureTextEntry = true
-        passwordTextField.setBottomBorder(UIColor.darkGrayColor())
-        self.passwordTextFieldHash = passwordTextField.hash
+            self.usernameTextField.frame = CGRectMake(topx,topy,width,height)
+            self.usernameTextField.placeholder = "username"
+            self.usernameTextField.backgroundColor = UIColor.clearColor()
+            self.usernameTextField.autocorrectionType = UITextAutocorrectionType.No
+            self.usernameTextField.setBottomBorder(UIColor.darkGrayColor())
+            self.usernameTextFieldHash = self.usernameTextField.hash
         
-        usernameTextField.delegate = self
-        passwordTextField.delegate = self
+            self.passwordTextField.frame = CGRectMake(topx,topy+40,width,height)
+            self.passwordTextField.placeholder = "password"
+            self.passwordTextField.backgroundColor = UIColor.clearColor()
+            self.passwordTextField.secureTextEntry = true
+            self.passwordTextField.setBottomBorder(UIColor.darkGrayColor())
+            self.passwordTextFieldHash = self.passwordTextField.hash
         
-        let loginButton = ZFRippleButton(type: .Custom)
+            self.usernameTextField.delegate = self
+            self.passwordTextField.delegate = self
         
-        loginButton.frame = CGRectMake(topx, topy+130, width, height+5)
-        loginButton.layer.cornerRadius = 18
-        loginButton.setTitle("LOGIN", forState: .Normal)
-        loginButton.backgroundColor = UIColor.redColor()
-        loginButton.addTarget(self, action: #selector(self.loginButtonDidTapped), forControlEvents: UIControlEvents.TouchUpInside)
+            let loginButton = ZFRippleButton(type: .Custom)
         
-        let orText = UITextView(frame: CGRectMake(topx, topy+175, width, height))
+            loginButton.frame = CGRectMake(topx, topy+130, width, height+5)
+            loginButton.layer.cornerRadius = 18
+            loginButton.setTitle("LOGIN", forState: .Normal)
+            loginButton.backgroundColor = UIColor.redColor()
+            loginButton.addTarget(self, action: #selector(self.loginButtonDidTapped), forControlEvents: UIControlEvents.TouchUpInside)
         
-        orText.text = "OR"
-        orText.textAlignment = NSTextAlignment.Center
-        orText.alpha = 0.7
-        orText.backgroundColor = UIColor.clearColor()
+            let orText = UITextView(frame: CGRectMake(topx, topy+175, width, height))
         
-        let registerButton  = ZFRippleButton(type: .Custom)
+            orText.text = "OR"
+            orText.textAlignment = NSTextAlignment.Center
+            orText.alpha = 0.7
+            orText.backgroundColor = UIColor.clearColor()
         
-        registerButton.frame = CGRectMake(topx, topy+210, width, height+5)
-        registerButton.layer.cornerRadius = 18
-        registerButton.setTitle("REGISTER" , forState:  .Normal)
-        registerButton.backgroundColor = UIColor.redColor()
-        registerButton.addTarget(self, action: #selector(self.registerButtonDidTapped), forControlEvents: UIControlEvents.TouchUpInside)
+            let registerButton  = ZFRippleButton(type: .Custom)
         
-        view.addSubview(usernameTextField)
-        view.addSubview(passwordTextField)
-        view.addSubview(loginButton)
-        view.addSubview(orText)
-        view.addSubview(registerButton)
+            registerButton.frame = CGRectMake(topx, topy+210, width, height+5)
+            registerButton.layer.cornerRadius = 18
+            registerButton.setTitle("REGISTER" , forState:  .Normal)
+            registerButton.backgroundColor = UIColor.redColor()
+            registerButton.addTarget(self, action: #selector(self.registerButtonDidTapped), forControlEvents: UIControlEvents.TouchUpInside)
         
+            self.view.addSubview(self.usernameTextField)
+            self.view.addSubview(self.passwordTextField)
+            self.view.addSubview(loginButton)
+            self.view.addSubview(orText)
+            self.view.addSubview(registerButton)
+            
+        })
     }
     
+    //This is different than other displayAlerts in the project
     func displayAlert(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction((UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+          
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                // First dismiss the Alert then LoginViewController
+                self.dismissViewControllerAnimated(true, completion: nil)
+                self.navigationController!.popViewControllerAnimated(true)
+                
+            })
             
-            self.dismissViewControllerAnimated(true, completion: nil)
             
         })))
         

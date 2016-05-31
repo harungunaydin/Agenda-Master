@@ -38,6 +38,10 @@ class EventTableViewCell: FoldingCell {
         
         super.awakeFromNib()
         
+        if self.row == nil {
+            print("harungunaydin - 1")
+        }
+        
         foregroundView.layer.cornerRadius = 10
         foregroundView.layer.masksToBounds = true
         containerView.layer.cornerRadius = 10
@@ -82,13 +86,15 @@ class EventTableViewCell: FoldingCell {
     func setupMapView() {
         
         if shouldHideMapButton == true {
-            fatalError("YO WTF??!!!?? - setupMapView() , EventTableViewCell.swift")
+            fatalError("setupMapView() , EventTableViewCell.swift")
         }
         
         mapButton.hidden = true
         biggerMapButton.hidden = false
         
         let geocoder = CLGeocoder()
+        
+        print("location = \(filteredEvents[row].location)")
         
         geocoder.geocodeAddressString(filteredEvents[row].location) { (placemarks, error) in
             
@@ -103,6 +109,7 @@ class EventTableViewCell: FoldingCell {
                     region.span = MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
                     
                     self.mapView.setRegion(region, animated: true)
+                    self.mapView.removeAnnotations(self.mapView.annotations)
                     self.mapView.addAnnotation(placemark)
                 }
                 

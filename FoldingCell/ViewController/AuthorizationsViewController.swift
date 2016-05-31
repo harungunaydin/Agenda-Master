@@ -12,6 +12,7 @@ import GTMOAuth2
 import ZFRippleButton
 import EventKit
 import StarWars
+import FBSDKLoginKit
 
 class AuthorizationsViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
@@ -24,50 +25,105 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
     @IBOutlet weak var agendaMasterButton: ZFRippleButton!
     @IBOutlet weak var googleButton: ZFRippleButton!
     @IBOutlet weak var appleButton: ZFRippleButton!
-    @IBOutlet weak var facebookButton: ZFRippleButton!
+    
+    var facebookButton: FBSDKLoginButton = FBSDKLoginButton()
     
     var count: Int = 0
     
+    func updateButtons() {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            let defaults = NSUserDefaults.standardUserDefaults()
+            
+            if ( defaults.objectForKey("isSignedInAgendaMaster") as! Bool ) == false {
+                self.agendaMasterButton.setTitle("Sign In", forState: .Normal)
+            } else {
+                self.agendaMasterButton.setTitle("Sign Out", forState: .Normal)
+            }
+            
+            if ( defaults.objectForKey("isSignedInGoogle") as! Bool ) == false {
+                self.googleButton.setTitle("Sign In", forState: .Normal)
+            } else {
+                self.googleButton.setTitle("Sign Out", forState: .Normal)
+            }
+            
+            if ( defaults.objectForKey("isSignedInApple") as! Bool ) == false {
+                self.appleButton.setTitle("Sign In", forState: .Normal)
+            } else {
+                self.appleButton.hidden = true
+            }
+            
+            if ( defaults.objectForKey("isSignedInFacebook") as! Bool ) == false {
+                self.facebookButton.setTitle("Sign In", forState: .Normal)
+            } else {
+                self.facebookButton.setTitle("Sign Out", forState: .Normal)
+            }
+            
+        })
+    }
+    
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        self.updateButtons()
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        if ( defaults.objectForKey("isSignedInAgendaMaster") as! Bool ) == false {
-            agendaMasterButton.setTitle("Sign In", forState: .Normal)
-        } else {
-            agendaMasterButton.setTitle("Sign Out", forState: .Normal)
-        }
-        
-        if ( defaults.objectForKey("isSignedInGoogle") as! Bool ) == false {
-            googleButton.setTitle("Sign In", forState: .Normal)
-        } else {
-            googleButton.setTitle("Sign Out", forState: .Normal)
-        }
-        
-        if ( defaults.objectForKey("isSignedInApple") as! Bool ) == false {
-            appleButton.setTitle("Sign In", forState: .Normal)
-        } else {
-            appleButton.hidden = true
-        }
-        
-        if ( defaults.objectForKey("isSignedInFacebook") as! Bool ) == false {
-            facebookButton.setTitle("Sign In", forState: .Normal)
-        } else {
-            facebookButton.setTitle("Sign Out", forState: .Normal)
-        }
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.updateButtons()
+            
+            self.facebookButton.center = self.view.center
+            
+       //     self.view.addSubview(self.facebookButton)
         
         
-        agendaMasterButton.addTarget(nil, action: #selector(self.didTappedAgendaMasterButton) , forControlEvents: UIControlEvents.TouchUpInside)
-        googleButton.addTarget(nil, action: #selector(self.didTappedGoogleButton) , forControlEvents: UIControlEvents.TouchUpInside)
-        appleButton.addTarget(nil, action: #selector(self.didTappedAppleButton) , forControlEvents: UIControlEvents.TouchUpInside)
-        facebookButton.addTarget(nil, action: #selector(self.didTappedFacebookButton) , forControlEvents: UIControlEvents.TouchUpInside)
+            self.agendaMasterButton.addTarget(nil, action: #selector(self.didTappedAgendaMasterButton) , forControlEvents: UIControlEvents.TouchUpInside)
+            self.googleButton.addTarget(nil, action: #selector(self.didTappedGoogleButton) , forControlEvents: UIControlEvents.TouchUpInside)
+            self.appleButton.addTarget(nil, action: #selector(self.didTappedAppleButton) , forControlEvents: UIControlEvents.TouchUpInside)
+  //        self.facebookButton.addTarget(nil, action: #selector(self.didTappedFacebookButton) , forControlEvents: UIControlEvents.TouchUpInside)
         
+        })
         
     }
     
     func didTappedAgendaMasterButton() {
+        
+        if agendaMasterButton.titleLabel!.text == "Sign In" {
+            performSegueWithIdentifier("_Login_Agenda_Master", sender: self)
+        } else {
+            
+            NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInAgendaMaster")
+            agendaMasterButton.setTitle("Sign In", forState: .Normal)
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("Agenda_Master_username")
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("Agenda_Master_password")
+            self.displayAlert("Successful", message: "You have successfully logged out from Agenda Master")
+
+            
+            var temp = [Event]()
+            for event in allEvents {
+                if event.source.name != "Agenda Master" {
+                    temp.append(event)
+                }
+            }
+            
+            allEvents = temp
+            temp.removeAll()
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                eventTable.prepareForReload()
+                eventTable.tableView.reloadData()
+                
+            })
+            
+        }
         
     }
     
@@ -96,11 +152,9 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             dispatch_async(dispatch_get_main_queue(), {
                 
                 eventTable.prepareForReload()
-                print("eventTable.tableView.reloadData()")
                 eventTable.tableView.reloadData()
                 
             })
-            
             
         }
         
@@ -113,22 +167,23 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
     
     func didTappedFacebookButton() {
         
+        print("Implement didTappedFacebookButton() function")
+        
     }
     
     func linkWithGoogleCalendar() {
         
         if let auth = GTMOAuth2ViewControllerTouch.authForGoogleFromKeychainForName( kKeychainItemName, clientID: kClientID, clientSecret: nil) {
             service.authorizer = auth
+            print("Google - service.authorizer = auth")
         }
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        if ( defaults.objectForKey("isSignedInGoogle") as! Bool ) == true {
+        if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInGoogle") as! Bool ) == true {
             
             if let authorizer = service.authorizer, canAuth = authorizer.canAuthorize where canAuth {
                 print("Error!!! - Already signed in")
             } else {
-                defaults.setObject(false, forKey: "isSignedInGoogle")
+                NSUserDefaults.standardUserDefaults().setObject(false, forKey: "isSignedInGoogle")
                 service.authorizer = nil
                 presentViewController( createAuthController(), animated: true, completion: nil )
             }
@@ -166,20 +221,20 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-    }
-    
     func checkCount() {
         self.count += 1
         print("count = \(self.count)")
-        if self.count == 2 {
+        if self.count == 3 {
             print("---Finished Pulling Events---")
             print("#Events = \(allEvents.count)")
+            
+            for event in allEvents {
+                print( "\(event.name) => \(event.startDate)" )
+            }
+            
             dispatch_async(dispatch_get_main_queue(), {
                 
                 eventTable.prepareForReload()
-                print("eventTable.tableView.reloadData()")
                 eventTable.tableView.reloadData()
                 
             })
@@ -198,6 +253,7 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         allEvents.removeAll()
         filteredEvents.removeAll()
         
+        // Pull events from Google Calendar
         dispatch_async(dispatch_get_main_queue(), {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInGoogle") as! Bool ) == true {
@@ -209,7 +265,7 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
 
         })
         
-        
+        // Pull events from local calendar - iPhone Calendar
         dispatch_async(dispatch_get_main_queue(), {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInApple") as! Bool ) == true {
@@ -220,6 +276,103 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             }
             
         })
+        
+        // Pull events from Agenda Master Website
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInAgendaMaster") as! Bool ) == true {
+                self.fetchEventsFromAgendaMaster()
+            } else {
+                print("Agenda Master SignIn - NO")
+                self.checkCount()
+            }
+            
+        })
+        
+    }
+    
+    func fetchEventsFromAgendaMaster() {
+        
+        let username = NSUserDefaults.standardUserDefaults().objectForKey("Agenda_Master_username") as? String
+        let password = NSUserDefaults.standardUserDefaults().objectForKey("Agenda_Master_password") as? String
+        
+        if username == nil || password == nil {
+            print("Did not login to the Agenda Master")
+            self.checkCount()
+            return
+        }
+        
+        let url:NSURL = NSURL(string: "http://clockblocked.us/~brian/resources/php/ios_get_tasks.php?username=" + username! + "&password=" + password! + "&ios_getcode=bb7427431a38")!
+        
+        let urlSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        
+        let myQuery = urlSession.dataTaskWithURL(url, completionHandler: {
+            data, response, error -> Void in
+            
+            if error != nil {
+                print("error getting Agenda Master events")
+                self.checkCount()
+                return
+            }
+            
+            if let content = data {
+                do {
+                    let jsonRes = try NSJSONSerialization.JSONObjectWithData(content, options: NSJSONReadingOptions.MutableContainers)
+                    let objects = jsonRes["events"]!!
+                    
+                    print("Json convertion is successful and size => \(objects.count)")
+                    
+                    for i in 0 ..< objects.count {
+                        
+                        if let source = objects[i]["source"] as? String {
+                            
+                            if source != "native" {
+                                continue
+                            }
+                            
+                            let newEvent = Event()
+                            
+                            newEvent.objectId = "AGMASTER" + ( objects[i]["id"] as! String )
+                            newEvent.name = objects[i]["title"] as? String
+                            newEvent.summary = objects[i]["description"] as? String
+                            
+                            let formatter = NSDateFormatter()
+                            formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                            formatter.timeStyle = .MediumStyle
+                            
+                            if let startDate = objects[i]["startDate"] as? String {
+                                newEvent.startDate = NSDate(timeIntervalSince1970: Double(startDate)!)
+                                newEvent.startDateString = formatter.stringFromDate(newEvent.startDate)
+                            }
+                            
+                            if let endDate = objects[i]["endDate"] as? String {
+                                newEvent.endDate = NSDate(timeIntervalSince1970: Double(endDate)!)
+                                newEvent.endDateString = formatter.stringFromDate(newEvent.endDate)
+                            }
+                            
+                            newEvent.location = objects[i]["location"] as? String
+                            
+                            newEvent.source = sources[0]
+                            
+                            allEvents.append(newEvent)
+                            
+                        }
+                        
+                    }
+                    
+                    self.checkCount()
+                    
+                } catch {
+                    self.checkCount()
+                    print("Can not convert to JSON. Check you internet connection")
+                }
+            } else {
+                self.checkCount()
+                print("Check your internet connection")
+            }
+            
+        })
+        myQuery.resume()
         
     }
     
@@ -290,10 +443,11 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             
             if error != nil {
                 self.dismissViewControllerAnimated(true, completion: {
-                    self.displayAlert("Error", message: "Please check your internet connection")
+                    print("Please check your internet connection")
                 })
                 return
             }
+            
             
             if let events = object.items() as? [GTLCalendarEvent] {
                 
@@ -303,22 +457,25 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                     
                     newEvent.name = event.summary
                     
-                    if let start = event.start {
-                        if let start = start.date {
-                            newEvent.startDate = start.date
+                    if event.start != nil {
+                        if event.start.dateTime != nil {
+                            
+                            print("\(newEvent.name) => \(event.start.dateTime.date)")
                         }
                     }
                     
-                    if event.start != nil && event.start.date != nil {
-                        newEvent.startDate = event.start.date.date
-                    } else {
-                        newEvent.startDate = nil
+                    let formatter = NSDateFormatter()
+                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
+                    formatter.timeStyle = .MediumStyle
+                    
+                    if event.start != nil && event.start.dateTime != nil {
+                        newEvent.startDate = event.start.dateTime.date
+                        newEvent.startDateString = formatter.stringFromDate(newEvent.startDate)
                     }
                     
-                    if event.end != nil && event.end.date != nil {
-                        newEvent.endDate = event.end.date.date
-                    } else {
-                        newEvent.endDate = nil
+                    if event.end != nil && event.end.dateTime != nil {
+                        newEvent.endDate = event.end.dateTime.date
+                        newEvent.endDateString = formatter.stringFromDate(newEvent.endDate)
                     }
                     
                     if newEvent.startDate != nil && newEvent.endDate != nil {
@@ -337,7 +494,6 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             self.checkCount()
             
         }
-        
         
     }
     
@@ -358,17 +514,11 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         }
         
         service.authorizer = authResult
+        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "isSignedInGoogle")
         dismissViewControllerAnimated(true, completion: nil)
         
         self.pullEvents()
         
-        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "isSignedInGoogle")
-        googleButton.setTitle("Sign Out", forState: .Normal)
-        
-    }
-    @IBAction func didTappedDismissButton(sender: AnyObject) {
-        print("tapped")
-        self.navigationController!.popViewControllerAnimated(true)
     }
     
     func displayAlert(title: String, message: String) {

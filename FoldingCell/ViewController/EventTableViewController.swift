@@ -1,6 +1,7 @@
 //
-//  MainTableViewController.swift
-//
+//  EventTableViewController.swift
+
+//  Harun Gunaydin
 
 import UIKit
 import MapKit
@@ -109,7 +110,6 @@ class EventTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("size of the table => \(filteredEvents.count)")
         return filteredEvents.count
     }
 
@@ -139,13 +139,11 @@ class EventTableViewController: UITableViewController {
         
         cell.objectId = event.objectId
         
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
         // set LeftView backgroundColor
-        if let ind = defaults.objectForKey("colorIndexForCellForId_" + cell.objectId) as? Int {
+        if let ind = NSUserDefaults.standardUserDefaults().objectForKey("colorIndexForCellForId_" + cell.objectId) as? Int {
             cell.leftView.backgroundColor = cellLeftViewColors[ind]
         } else {
-            defaults.setObject(0, forKey: "colorIndexForCellForId_" + cell.objectId)
+            NSUserDefaults.standardUserDefaults().setObject(0, forKey: "colorIndexForCellForId_" + cell.objectId)
             cell.leftView.backgroundColor = cellLeftViewColors[0]
         }
         
@@ -154,11 +152,11 @@ class EventTableViewController: UITableViewController {
         cell.textView.text = event.summary
         
         if let start = event.startDate {
-            cell.startDateLabel.text = "\(start)"
+            cell.startDateLabel.text = event.startDateString
         }
         
         if let end = event.endDate {
-            cell.endDateLabel.text = "\(end)"
+            cell.endDateLabel.text = event.endDateString
         }
         
         if event.location == nil || event.location.characters.count < 5 {
@@ -207,12 +205,6 @@ class EventTableViewController: UITableViewController {
         }, completion: nil)
 
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let destination = segue.destinationViewController
-        destination.transitioningDelegate = self
-    }
-    
 }
 
 extension EventTableViewController: UIViewControllerTransitioningDelegate {
