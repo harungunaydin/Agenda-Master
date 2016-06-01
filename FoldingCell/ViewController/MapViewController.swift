@@ -1,9 +1,8 @@
 //
 //  MapViewController.swift
-//  FoldingCell
+//  Agenda Master
 //
 //  Created by Harun Gunaydin on 5/11/16.
-//  Copyright © 2016 Alex K. All rights reserved.
 //
 
 import UIKit

@@ -36,6 +36,7 @@
 		230EE4FD1CDF1381007AF656 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4E21CDF1381007AF656 /* LoginViewController.swift */; };
 		231BD26B1CDF14B400178EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231BD26A1CDF14B400178EFE /* AppDelegate.swift */; };
 		23375E131CE30B390070D9DE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23375E121CE30B390070D9DE /* MapViewController.swift */; };
+		2340480D1CFF65DA00B5F5EA /* Google_SignIn_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2340480C1CFF65DA00B5F5EA /* Google_SignIn_Button.png */; };
 		235E7BD51CF81FDE0082B0F2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235E7BD41CF81FDE0082B0F2 /* FBSDKCoreKit.framework */; };
 		238207E41CEC117700E3715A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238207E31CEC117700E3715A /* FilterViewController.swift */; };
 		23C4AB511CE01307009249F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C4AB501CE01307009249F3 /* MapKit.framework */; };
@@ -98,6 +99,7 @@
 		230EE4E21CDF1381007AF656 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		231BD26A1CDF14B400178EFE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23375E121CE30B390070D9DE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		2340480C1CFF65DA00B5F5EA /* Google_SignIn_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Google_SignIn_Button.png; sourceTree = "<group>"; };
 		235E7BD41CF81FDE0082B0F2 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		238207E31CEC117700E3715A /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		23A5DDCA7F0CCD829C3A66AB /* Pods-FoldingCell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoldingCell.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoldingCell/Pods-FoldingCell.debug.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		230EE4D71CDF1381007AF656 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2340480C1CFF65DA00B5F5EA /* Google_SignIn_Button.png */,
 				230EE4D81CDF1381007AF656 /* Agenda_Master.png */,
 				230EE4D91CDF1381007AF656 /* Agenda_Master_Logo.png */,
 				230EE4DA1CDF1381007AF656 /* Apple_Logo.png */,
@@ -403,6 +406,7 @@
 				230EE4EF1CDF1381007AF656 /* OpenSans-Light.ttf in Resources */,
 				230EE4F91CDF1381007AF656 /* Google_Logo.png in Resources */,
 				230EE4EB1CDF1381007AF656 /* OpenSans-BoldItalic.ttf in Resources */,
+				2340480D1CFF65DA00B5F5EA /* Google_SignIn_Button.png in Resources */,
 				230EE4EC1CDF1381007AF656 /* OpenSans-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

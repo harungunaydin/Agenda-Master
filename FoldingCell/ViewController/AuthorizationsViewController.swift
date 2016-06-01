@@ -12,7 +12,6 @@ import GTMOAuth2
 import ZFRippleButton
 import EventKit
 import StarWars
-import FBSDKLoginKit
 
 class AuthorizationsViewController: UIViewController, UIViewControllerTransitioningDelegate {
     
@@ -25,8 +24,6 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
     @IBOutlet weak var agendaMasterButton: ZFRippleButton!
     @IBOutlet weak var googleButton: ZFRippleButton!
     @IBOutlet weak var appleButton: ZFRippleButton!
-    
-    var facebookButton: FBSDKLoginButton = FBSDKLoginButton()
     
     var count: Int = 0
     
@@ -49,21 +46,13 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             }
             
             if ( defaults.objectForKey("isSignedInApple") as! Bool ) == false {
-                self.appleButton.setTitle("Sign In", forState: .Normal)
+                self.appleButton.setTitle("Sync", forState: .Normal)
             } else {
                 self.appleButton.hidden = true
             }
             
-            if ( defaults.objectForKey("isSignedInFacebook") as! Bool ) == false {
-                self.facebookButton.setTitle("Sign In", forState: .Normal)
-            } else {
-                self.facebookButton.setTitle("Sign Out", forState: .Normal)
-            }
-            
         })
     }
-    
-    
     
     override func viewDidAppear(animated: Bool) {
         
@@ -78,16 +67,10 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         dispatch_async(dispatch_get_main_queue(), {
             
             self.updateButtons()
-            
-            self.facebookButton.center = self.view.center
-            
-       //     self.view.addSubview(self.facebookButton)
-        
         
             self.agendaMasterButton.addTarget(nil, action: #selector(self.didTappedAgendaMasterButton) , forControlEvents: UIControlEvents.TouchUpInside)
             self.googleButton.addTarget(nil, action: #selector(self.didTappedGoogleButton) , forControlEvents: UIControlEvents.TouchUpInside)
             self.appleButton.addTarget(nil, action: #selector(self.didTappedAppleButton) , forControlEvents: UIControlEvents.TouchUpInside)
-  //        self.facebookButton.addTarget(nil, action: #selector(self.didTappedFacebookButton) , forControlEvents: UIControlEvents.TouchUpInside)
         
         })
         

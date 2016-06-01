@@ -54,16 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.setObject(true, forKey: "Apple_filtered")
             defaults.setObject(true, forKey: "Facebook_filtered")
             
-            defaults.setObject(allEvents, forKey: "allEvents")
-            
             defaults.setObject(false, forKey: "eventsTableNeedsRefreshing")
             
-        }
-        
-        if let events = defaults.objectForKey("allEvents") as? [Event] {
-            allEvents = events
-        } else {
-            print("There is a problem - didFinishLaunchingWithOptions, AppDelegate")
+            let deletedItems = [String]()
+            defaults.setObject(deletedItems, forKey: "deletedItems")
+            
         }
         
         

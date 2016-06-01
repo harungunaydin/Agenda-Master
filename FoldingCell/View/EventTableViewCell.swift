@@ -1,9 +1,7 @@
 //
-//  DemoCell.swift
-//  FoldingCell
+//  EventTableViewCell.swift
+//  Agenda Master
 //
-//  Created by Alex K. on 25/12/15.
-//  Copyright © 2015 Alex K. All rights reserved.
 //
 
 import UIKit
@@ -23,7 +21,7 @@ class EventTableViewCell: FoldingCell {
     @IBOutlet weak var secondContainerView: RotatedView!
     @IBOutlet weak var mapButton: ZFRippleButton!
     @IBOutlet weak var biggerMapButton: UIButton!
-    @IBOutlet weak var trashButton: UIButton!
+    @IBOutlet weak var trashButton: ZFRippleButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var firstContainerView: UIView!
     @IBOutlet weak var secondContrainerView: RotatedView!
@@ -37,10 +35,6 @@ class EventTableViewCell: FoldingCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
-        if self.row == nil {
-            print("harungunaydin - 1")
-        }
         
         foregroundView.layer.cornerRadius = 10
         foregroundView.layer.masksToBounds = true
@@ -59,6 +53,7 @@ class EventTableViewCell: FoldingCell {
         biggerMapButton.hidden = true
         biggerMapButton.addTarget(self, action: #selector(self.setupBiggerMapView), forControlEvents: UIControlEvents.TouchUpInside)
         
+        self.trashButton.addTarget(self, action: #selector(self.deleteEvent), forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func deleteEvent() {
@@ -66,9 +61,11 @@ class EventTableViewCell: FoldingCell {
         print("deleteEvent()")
         
         NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedEventForId_" + self.objectId )
+        var deletedItems = NSUserDefaults.standardUserDefaults().objectForKey("deletedItems") as! [String]
+        deletedItems.append(self.objectId)
+        NSUserDefaults.standardUserDefaults().setObject(deletedItems, forKey: "deletedItems")
         
-        filteredEvents.removeAtIndex(row)
-        
+        eventTable.prepareForReload()
         eventTable.tableView.reloadData()
         
     }
@@ -82,19 +79,11 @@ class EventTableViewCell: FoldingCell {
         
     }
     
-    
-    func setupMapView() {
-        
-        if shouldHideMapButton == true {
-            fatalError("setupMapView() , EventTableViewCell.swift")
-        }
-        
-        mapButton.hidden = true
-        biggerMapButton.hidden = false
+    func geocodeAddressing(address: String , count: Int) {
         
         let geocoder = CLGeocoder()
         
-        print("location = \(filteredEvents[row].location)")
+        print("location = \(address) count = \(count)")
         
         geocoder.geocodeAddressString(filteredEvents[row].location) { (placemarks, error) in
             
@@ -111,14 +100,33 @@ class EventTableViewCell: FoldingCell {
                     self.mapView.setRegion(region, animated: true)
                     self.mapView.removeAnnotations(self.mapView.annotations)
                     self.mapView.addAnnotation(placemark)
+                    
+                } else if count < 2 {
+                    self.geocodeAddressing(address, count: count + 1)
+                    return
                 }
                 
+            } else if count < 2 {
+                self.geocodeAddressing(address, count: count + 1)
+                return
             }
             
             self.mapView.hidden = false
             
         }
         
+    }
+    
+    func setupMapView() {
+        
+        if shouldHideMapButton == true {
+            fatalError("setupMapView() , EventTableViewCell.swift")
+        }
+        
+        mapButton.hidden = true
+        biggerMapButton.hidden = false
+        
+        self.geocodeAddressing(filteredEvents[row].location, count: 0)
         
     }
     

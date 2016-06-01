@@ -1,7 +1,9 @@
 //
-//  EventTableViewController.swift
-
-//  Harun Gunaydin
+//  MapViewController.swift
+//  Agenda Master
+//
+//  Created by Harun Gunaydin
+//
 
 import UIKit
 import MapKit
