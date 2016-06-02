@@ -51,9 +51,9 @@ class EventTableViewController: UITableViewController {
     
     func cmp( a : Event , b : Event ) -> Bool {
         if b.startDate == nil {
-            return false
-        } else if a.startDate == nil {
             return true
+        } else if a.startDate == nil {
+            return false
         }
         
         let x = a.startDate.timeIntervalSince1970
@@ -153,12 +153,31 @@ class EventTableViewController: UITableViewController {
         cell.eventNameLabel2.text = event.name
         cell.textView.text = event.summary
         
-        if let start = event.startDate {
-            cell.startDateLabel.text = event.startDateString
+        if let startDateString = event.startDateString {
+            cell.startDateLabel.text = startDateString
+            
+            cell.startDateLabel2.text = startDateString
+            
+            if let startHourString  = event.startHourString {
+                cell.startHourLabel.text = startHourString
+                if startDateString != "" && startHourString != "" {
+                    cell.startDateLabel.text = startDateString + " at " + startHourString
+                }
+            }
+            
         }
         
-        if let end = event.endDate {
-            cell.endDateLabel.text = event.endDateString
+        if let endDateString = event.endDateString {
+            cell.endDateLabel.text = endDateString
+            cell.endDateLabel2.text = endDateString
+            
+            if let endHourString = event.endHourString {
+                cell.endHourLabel.text = endHourString
+                if endDateString != "" && endHourString != "" {
+                    cell.endDateLabel.text = endDateString + " at " + endHourString
+                }
+            }
+            
         }
         
         if event.location == nil || event.location.characters.count < 5 {

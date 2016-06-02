@@ -48,7 +48,8 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             if ( defaults.objectForKey("isSignedInApple") as! Bool ) == false {
                 self.appleButton.setTitle("Sync", forState: .Normal)
             } else {
-                self.appleButton.hidden = true
+                self.appleButton.setTitle("Done", forState: .Normal)
+                self.appleButton.userInteractionEnabled = false
             }
             
         })
@@ -58,7 +59,6 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         
         super.viewDidAppear(animated)
         self.updateButtons()
-        
     }
     
     override func viewDidLoad() {
@@ -124,8 +124,6 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             for event in allEvents {
                 if event.source.name != "Google" {
                     temp.append(event)
-                    
-                    print("sourcename = \(event.source.name)")
                 }
             }
             
@@ -145,12 +143,16 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
     }
     
     func didTappedAppleButton() {
-        self.linkWithIphoneCalendar()
-    }
-    
-    func didTappedFacebookButton() {
         
-        print("Implement didTappedFacebookButton() function")
+        if appleButton.titleLabel!.text == "Done" {
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.displayAlert("Sync", message: "You have already sycned with your iPhone's calendar")
+            })
+            
+        } else {
+            self.linkWithIphoneCalendar()
+        }
         
     }
     
@@ -200,20 +202,13 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         
     }
     
-    func linkWithFacebookCalendar() {
-        
-    }
-    
     func checkCount() {
         self.count += 1
         print("count = \(self.count)")
         if self.count == 3 {
             print("---Finished Pulling Events---")
             print("#Events = \(allEvents.count)")
-            
-            for event in allEvents {
-                print( "\(event.name) => \(event.startDate)" )
-            }
+        
             
             dispatch_async(dispatch_get_main_queue(), {
                 
@@ -240,6 +235,7 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         dispatch_async(dispatch_get_main_queue(), {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInGoogle") as! Bool ) == true {
+                print("Google SignIn - YES")
                 self.fetchEventsFromGoogle()
             } else {
                 print("Google SignIn - NO")
@@ -252,6 +248,7 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         dispatch_async(dispatch_get_main_queue(), {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInApple") as! Bool ) == true {
+                print("Apple SignIn - YES")
                 self.fetchEventsFromIphoneCalendar()
             } else {
                 print("Apple SignIn - NO")
@@ -264,6 +261,7 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         dispatch_async(dispatch_get_main_queue(), {
             
             if ( NSUserDefaults.standardUserDefaults().objectForKey("isSignedInAgendaMaster") as! Bool ) == true {
+                print("Agenda Master SignIn - YES")
                 self.fetchEventsFromAgendaMaster()
             } else {
                 print("Agenda Master SignIn - NO")
@@ -320,17 +318,21 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                             newEvent.summary = objects[i]["description"] as? String
                             
                             let formatter = NSDateFormatter()
-                            formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                            formatter.timeStyle = .MediumStyle
+                            formatter.dateFormat = "MMM dd, yyyy"
+                            
+                            let formatter2 = NSDateFormatter()
+                            formatter2.dateFormat = "hh:mm a"
                             
                             if let startDate = objects[i]["startDate"] as? String {
                                 newEvent.startDate = NSDate(timeIntervalSince1970: Double(startDate)!)
                                 newEvent.startDateString = formatter.stringFromDate(newEvent.startDate)
+                                newEvent.startHourString = formatter2.stringFromDate(newEvent.startDate)
                             }
                             
                             if let endDate = objects[i]["endDate"] as? String {
                                 newEvent.endDate = NSDate(timeIntervalSince1970: Double(endDate)!)
                                 newEvent.endDateString = formatter.stringFromDate(newEvent.endDate)
+                                newEvent.endHourString = formatter2.stringFromDate(newEvent.endDate)
                             }
                             
                             newEvent.location = objects[i]["location"] as? String
@@ -369,13 +371,30 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                 
                 let events = eventStore.eventsMatchingPredicate( eventStore.predicateForEventsWithStartDate(NSDate(), endDate: NSDate(timeIntervalSinceNow: +30*24*3600), calendars: [eventStore.defaultCalendarForNewEvents]) )
                 
-                print("AppleEventsCount = \(events.count)")
-                
                 for event in events {
                     
                     let newEvent = Event()
+                    
+                    let formatter = NSDateFormatter()
+                    formatter.dateFormat = "MMM dd, yyyy"
+                    
+                    let formatter2 = NSDateFormatter()
+                    formatter2.dateFormat = "hh:mm a"
+                    
                     newEvent.startDate = event.startDate
                     newEvent.endDate = event.endDate
+                    
+                    if newEvent.startDate != nil {
+                        newEvent.startDateString = formatter.stringFromDate(newEvent.startDate)
+                        newEvent.startHourString = formatter2.stringFromDate(newEvent.startDate)
+                    }
+                    
+                    if newEvent.endDate != nil {
+                        newEvent.endDateString = formatter.stringFromDate(newEvent.endDate)
+                        newEvent.endDateString = formatter2.stringFromDate(newEvent.endDate)
+                    }
+                    
+                    
                     newEvent.objectId = event.eventIdentifier
                     newEvent.location = event.location
                     newEvent.source = sources[2] // Source: Apple
@@ -448,17 +467,21 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                     }
                     
                     let formatter = NSDateFormatter()
-                    formatter.dateStyle = NSDateFormatterStyle.LongStyle
-                    formatter.timeStyle = .MediumStyle
+                    formatter.dateFormat = "MMM dd, yyyy"
+                    
+                    let formatter2 = NSDateFormatter()
+                    formatter2.dateFormat = "hh:mm a"
                     
                     if event.start != nil && event.start.dateTime != nil {
                         newEvent.startDate = event.start.dateTime.date
                         newEvent.startDateString = formatter.stringFromDate(newEvent.startDate)
+                        newEvent.startHourString = formatter2.stringFromDate(newEvent.startDate)
                     }
                     
                     if event.end != nil && event.end.dateTime != nil {
                         newEvent.endDate = event.end.dateTime.date
                         newEvent.endDateString = formatter.stringFromDate(newEvent.endDate)
+                        newEvent.endHourString = formatter2.stringFromDate(newEvent.endDate)
                     }
                     
                     if newEvent.startDate != nil && newEvent.endDate != nil {

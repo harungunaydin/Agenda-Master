@@ -9,8 +9,6 @@
 import UIKit
 import CoreData
 
-import FBSDKCoreKit
-
 var allEvents = [Event]()
 var filteredEvents = [Event]()
 var sources = [EventSource]()
@@ -22,21 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        let handled: Bool = FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
-        // Add any custom logic here.
-        return handled
-    }
-    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         sources.append( EventSource(name: "Agenda Master", logo: UIImage(named: "Agenda_Master_Logo.png")! ) )
         sources.append( EventSource(name: "Google", logo: UIImage(named: "Google_Logo.png" )! ) )
         sources.append( EventSource(name: "Apple", logo: UIImage(named: "Apple_Logo.png" )! ) )
-        sources.append( EventSource(name: "Facebook", logo: UIImage(named: "Facebook_Logo.png" )! ) )
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -47,26 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults.setObject(false, forKey: "isSignedInAgendaMaster")
             defaults.setObject(false, forKey: "isSignedInGoogle")
             defaults.setObject(false, forKey: "isSignedInApple")
-            defaults.setObject(false, forKey: "isSignedInFacebook")
             
             defaults.setObject(true, forKey: "Agenda Master_filtered")
             defaults.setObject(true, forKey: "Google_filtered")
             defaults.setObject(true, forKey: "Apple_filtered")
-            defaults.setObject(true, forKey: "Facebook_filtered")
-            
-            defaults.setObject(false, forKey: "eventsTableNeedsRefreshing")
-            
-            let deletedItems = [String]()
-            defaults.setObject(deletedItems, forKey: "deletedItems")
             
         }
         
-        
         return true
-    }
-    
-    func applicationDidBecomeActive(application: UIApplication) {
-        FBSDKAppEvents.activateApp()
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -15,7 +15,11 @@ class EventTableViewCell: FoldingCell {
     @IBOutlet weak var eventNameLabel: UILabel!
     @IBOutlet weak var eventNameLabel2: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var startDateLabel2: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet weak var endDateLabel2: UILabel!
+    @IBOutlet weak var startHourLabel: UILabel!
+    @IBOutlet weak var endHourLabel: UILabel!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var secondContainerView: RotatedView!
@@ -58,15 +62,46 @@ class EventTableViewCell: FoldingCell {
     
     func deleteEvent() {
         
-        print("deleteEvent()")
+        let alert = UIAlertController(title: "Trash", message: "Delete Event?", preferredStyle: UIAlertControllerStyle.Alert)
         
-        NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedEventForId_" + self.objectId )
-        var deletedItems = NSUserDefaults.standardUserDefaults().objectForKey("deletedItems") as! [String]
-        deletedItems.append(self.objectId)
-        NSUserDefaults.standardUserDefaults().setObject(deletedItems, forKey: "deletedItems")
+        alert.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action) -> Void in
+            
+            if let items = NSUserDefaults.standardUserDefaults().objectForKey("deletedItems") as? [String] {
+                
+                var deletedItems = items
+                deletedItems.append(self.objectId)
+                NSUserDefaults.standardUserDefaults().setObject(deletedItems, forKey: "deletedItems")
+                NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedEventForId_" + self.objectId )
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    eventTable.prepareForReload()
+                    eventTable.tableView.reloadData()
+                })
+                
+            } else {
+                var deletedItems = [String]()
+                deletedItems.append(self.objectId)
+                NSUserDefaults.standardUserDefaults().setObject(deletedItems, forKey: "deletedItems")
+                NSUserDefaults.standardUserDefaults().setObject(true, forKey: "deletedEventForId_" + self.objectId )
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    eventTable.prepareForReload()
+                    eventTable.tableView.reloadData()
+                })
+                
+            }
+            
+            eventTable.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
         
-        eventTable.prepareForReload()
-        eventTable.tableView.reloadData()
+        alert.addAction(UIAlertAction(title: "NO", style: .Default, handler: { (action) in
+            
+            eventTable.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
+        
+        eventTable.presentViewController(alert, animated: true, completion: nil)
         
     }
     

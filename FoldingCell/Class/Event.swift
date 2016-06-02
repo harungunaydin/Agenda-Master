@@ -13,8 +13,10 @@ class Event {
     var name: String!
     var startDate: NSDate!
     var startDateString: String!
+    var startHourString: String!
     var endDate: NSDate!
     var endDateString: String!
+    var endHourString: String!
     var summary: String!
     var duration: Double!
     var location: String!
@@ -25,25 +27,15 @@ class Event {
         self.name = ""
         self.startDate = nil
         self.startDateString = ""
+        self.startHourString = ""
         self.endDate = nil
         self.endDateString = ""
+        self.endHourString = ""
         self.summary = ""
         self.duration = -1
         self.location = ""
         self.objectId = ""
         
-    }
-    
-    init(objectId: String , name: String , startDate: NSDate , endDate: NSDate , summary: String , duration: Double , location: String , source: EventSource) {
-        
-        self.objectId = objectId
-        self.name = name
-        self.startDate = startDate
-        self.endDate = endDate
-        self.summary = summary
-        self.duration = duration
-        self.source = source
-        self.location = location
     }
     
     

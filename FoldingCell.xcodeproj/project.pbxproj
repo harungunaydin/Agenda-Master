@@ -25,11 +25,7 @@
 		230EE4F21CDF1381007AF656 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4D41CDF1381007AF656 /* OpenSans-Semibold.ttf */; };
 		230EE4F31CDF1381007AF656 /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4D51CDF1381007AF656 /* OpenSans-SemiboldItalic.ttf */; };
 		230EE4F41CDF1381007AF656 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4D61CDF1381007AF656 /* Info.plist */; };
-		230EE4F51CDF1381007AF656 /* Agenda_Master.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4D81CDF1381007AF656 /* Agenda_Master.png */; };
 		230EE4F61CDF1381007AF656 /* Agenda_Master_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4D91CDF1381007AF656 /* Agenda_Master_Logo.png */; };
-		230EE4F71CDF1381007AF656 /* Apple_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4DA1CDF1381007AF656 /* Apple_Logo.png */; };
-		230EE4F81CDF1381007AF656 /* Facebook_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4DB1CDF1381007AF656 /* Facebook_Logo.png */; };
-		230EE4F91CDF1381007AF656 /* Google_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 230EE4DC1CDF1381007AF656 /* Google_Logo.png */; };
 		230EE4FA1CDF1381007AF656 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4DE1CDF1381007AF656 /* EventTableViewCell.swift */; };
 		230EE4FB1CDF1381007AF656 /* AuthorizationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4E01CDF1381007AF656 /* AuthorizationsViewController.swift */; };
 		230EE4FC1CDF1381007AF656 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230EE4E11CDF1381007AF656 /* EventTableViewController.swift */; };
@@ -37,10 +33,10 @@
 		231BD26B1CDF14B400178EFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231BD26A1CDF14B400178EFE /* AppDelegate.swift */; };
 		23375E131CE30B390070D9DE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23375E121CE30B390070D9DE /* MapViewController.swift */; };
 		2340480D1CFF65DA00B5F5EA /* Google_SignIn_Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2340480C1CFF65DA00B5F5EA /* Google_SignIn_Button.png */; };
-		235E7BD51CF81FDE0082B0F2 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235E7BD41CF81FDE0082B0F2 /* FBSDKCoreKit.framework */; };
+		234A36321CFFE6B80081AED2 /* Google_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 234A36311CFFE6B80081AED2 /* Google_Logo.png */; };
+		234A36341CFFE8440081AED2 /* Apple_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 234A36331CFFE8440081AED2 /* Apple_Logo.png */; };
 		238207E41CEC117700E3715A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238207E31CEC117700E3715A /* FilterViewController.swift */; };
 		23C4AB511CE01307009249F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23C4AB501CE01307009249F3 /* MapKit.framework */; };
-		23FA052B1CF8CC4100E2BAF2 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FA052A1CF8CC4100E2BAF2 /* FBSDKLoginKit.framework */; };
 		8498513F1C5639F9006FA400 /* FoldingCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498513E1C5639F9006FA400 /* FoldingCellTests.swift */; };
 		AC147A9000C81CE584EC64CE /* Pods_FoldingCell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1208C0D98C7F0F54F7CF580C /* Pods_FoldingCell.framework */; };
 /* End PBXBuildFile section */
@@ -88,11 +84,7 @@
 		230EE4D41CDF1381007AF656 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		230EE4D51CDF1381007AF656 /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
 		230EE4D61CDF1381007AF656 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		230EE4D81CDF1381007AF656 /* Agenda_Master.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Agenda_Master.png; sourceTree = "<group>"; };
 		230EE4D91CDF1381007AF656 /* Agenda_Master_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Agenda_Master_Logo.png; sourceTree = "<group>"; };
-		230EE4DA1CDF1381007AF656 /* Apple_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Apple_Logo.png; sourceTree = "<group>"; };
-		230EE4DB1CDF1381007AF656 /* Facebook_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Facebook_Logo.png; sourceTree = "<group>"; };
-		230EE4DC1CDF1381007AF656 /* Google_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Google_Logo.png; sourceTree = "<group>"; };
 		230EE4DE1CDF1381007AF656 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		230EE4E01CDF1381007AF656 /* AuthorizationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationsViewController.swift; sourceTree = "<group>"; };
 		230EE4E11CDF1381007AF656 /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
@@ -100,12 +92,12 @@
 		231BD26A1CDF14B400178EFE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23375E121CE30B390070D9DE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		2340480C1CFF65DA00B5F5EA /* Google_SignIn_Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Google_SignIn_Button.png; sourceTree = "<group>"; };
-		235E7BD41CF81FDE0082B0F2 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		234A36311CFFE6B80081AED2 /* Google_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Google_Logo.png; sourceTree = "<group>"; };
+		234A36331CFFE8440081AED2 /* Apple_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Apple_Logo.png; sourceTree = "<group>"; };
 		238207E31CEC117700E3715A /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		23A5DDCA7F0CCD829C3A66AB /* Pods-FoldingCell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoldingCell.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoldingCell/Pods-FoldingCell.debug.xcconfig"; sourceTree = "<group>"; };
 		23C4AB501CE01307009249F3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		23C4AB521CE01334009249F3 /* FoldingCell.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FoldingCell.entitlements; sourceTree = "<group>"; };
-		23FA052A1CF8CC4100E2BAF2 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		73B1067618DDAE8ADAF1A593 /* Pods-FoldingCell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoldingCell.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoldingCell/Pods-FoldingCell.release.xcconfig"; sourceTree = "<group>"; };
 		840B984B1C33FE660081B926 /* FoldingCellFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FoldingCellFramework.h; sourceTree = "<group>"; };
 		840B984D1C33FE660081B926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,8 +113,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				23C4AB511CE01307009249F3 /* MapKit.framework in Frameworks */,
-				235E7BD51CF81FDE0082B0F2 /* FBSDKCoreKit.framework in Frameworks */,
-				23FA052B1CF8CC4100E2BAF2 /* FBSDKLoginKit.framework in Frameworks */,
 				AC147A9000C81CE584EC64CE /* Pods_FoldingCell.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,11 +193,9 @@
 			isa = PBXGroup;
 			children = (
 				2340480C1CFF65DA00B5F5EA /* Google_SignIn_Button.png */,
-				230EE4D81CDF1381007AF656 /* Agenda_Master.png */,
 				230EE4D91CDF1381007AF656 /* Agenda_Master_Logo.png */,
-				230EE4DA1CDF1381007AF656 /* Apple_Logo.png */,
-				230EE4DB1CDF1381007AF656 /* Facebook_Logo.png */,
-				230EE4DC1CDF1381007AF656 /* Google_Logo.png */,
+				234A36311CFFE6B80081AED2 /* Google_Logo.png */,
+				234A36331CFFE8440081AED2 /* Apple_Logo.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -244,8 +232,6 @@
 		8090D2FF7C8D6B1059617598 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				23FA052A1CF8CC4100E2BAF2 /* FBSDKLoginKit.framework */,
-				235E7BD41CF81FDE0082B0F2 /* FBSDKCoreKit.framework */,
 				23C4AB501CE01307009249F3 /* MapKit.framework */,
 				1208C0D98C7F0F54F7CF580C /* Pods_FoldingCell.framework */,
 			);
@@ -395,19 +381,17 @@
 				230EE4F61CDF1381007AF656 /* Agenda_Master_Logo.png in Resources */,
 				230EE4EE1CDF1381007AF656 /* OpenSans-Italic.ttf in Resources */,
 				230EE4ED1CDF1381007AF656 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
-				230EE4F51CDF1381007AF656 /* Agenda_Master.png in Resources */,
+				234A36341CFFE8440081AED2 /* Apple_Logo.png in Resources */,
 				230EE4F41CDF1381007AF656 /* Info.plist in Resources */,
 				230EE4E31CDF1381007AF656 /* Assets.xcassets in Resources */,
 				230EE4F01CDF1381007AF656 /* OpenSans-LightItalic.ttf in Resources */,
 				230EE4EA1CDF1381007AF656 /* OpenSans-Bold.ttf in Resources */,
 				230EE4E41CDF1381007AF656 /* LaunchScreen.storyboard in Resources */,
-				230EE4F71CDF1381007AF656 /* Apple_Logo.png in Resources */,
-				230EE4F81CDF1381007AF656 /* Facebook_Logo.png in Resources */,
 				230EE4EF1CDF1381007AF656 /* OpenSans-Light.ttf in Resources */,
-				230EE4F91CDF1381007AF656 /* Google_Logo.png in Resources */,
 				230EE4EB1CDF1381007AF656 /* OpenSans-BoldItalic.ttf in Resources */,
 				2340480D1CFF65DA00B5F5EA /* Google_SignIn_Button.png in Resources */,
 				230EE4EC1CDF1381007AF656 /* OpenSans-ExtraBold.ttf in Resources */,
+				234A36321CFFE6B80081AED2 /* Google_Logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
