@@ -23,6 +23,8 @@ class EventTableViewController: UITableViewController {
         
         self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
+   //     self.refreshControl?.addTarget(self, action: #selector( self.handleRefresh ), forControlEvents: UIControlEvents.ValueChanged)
+        
         eventTable = self
         
         self.transitioningDelegate = self
@@ -31,9 +33,15 @@ class EventTableViewController: UITableViewController {
         
     }
     
-    func didTappedAuthButton() {
+    func handleRefresh() {
         
-        print("didTappedAuthButton")
+        self.view.userInteractionEnabled = false
+        AuthorizationsViewController().pullEvents()
+        self.refreshControl?.endRefreshing()
+        self.view.userInteractionEnabled = true
+    }
+    
+    func didTappedAuthButton() {
         
         let authVC = self.storyboard!.instantiateViewControllerWithIdentifier("AuthorizationsViewController") as! AuthorizationsViewController
         

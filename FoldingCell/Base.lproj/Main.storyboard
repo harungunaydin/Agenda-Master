@@ -434,7 +434,7 @@
             </objects>
             <point key="canvasLocation" x="-2418" y="-410"/>
         </scene>
-        <!--CALENDAR-->
+        <!--AGENDA-->
         <scene sceneID="Q2d-BE-geS">
             <objects>
                 <tableViewController storyboardIdentifier="EventTableViewController" id="0cn-rv-Emg" customClass="EventTableViewController" customModule="Agenda_Master" customModuleProvider="target" sceneMemberID="viewController">
@@ -787,7 +787,7 @@
                             <outlet property="delegate" destination="0cn-rv-Emg" id="o83-eX-gao"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="CALENDAR" id="jr9-RO-KXy">
+                    <navigationItem key="navigationItem" title="AGENDA" id="jr9-RO-KXy">
                         <barButtonItem key="leftBarButtonItem" title="Auth" id="VFg-hC-FDF">
                             <connections>
                                 <segue destination="1qM-Du-8gY" kind="show" id="XsN-hn-tAr"/>

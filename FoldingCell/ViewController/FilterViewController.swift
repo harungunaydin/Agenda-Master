@@ -67,7 +67,7 @@ class FilterViewController: UIViewController {
                 self.agendaMasterImage.alpha = 1
                 NSUserDefaults.standardUserDefaults().setObject(true, forKey: "Agenda Master_filtered")
             } else {
-                self.agendaMasterImage.alpha = 0.2
+                self.agendaMasterImage.alpha = 0.15
                 NSUserDefaults.standardUserDefaults().setObject(false, forKey: "Agenda Master_filtered")
             }
         
@@ -89,7 +89,7 @@ class FilterViewController: UIViewController {
                 self.googleImage.alpha = 1
                 NSUserDefaults.standardUserDefaults().setObject(true, forKey: "Google_filtered")
             } else {
-                self.googleImage.alpha = 0.2
+                self.googleImage.alpha = 0.15
                 NSUserDefaults.standardUserDefaults().setObject(false, forKey: "Google_filtered")
             }
             
@@ -111,7 +111,7 @@ class FilterViewController: UIViewController {
                 self.appleImage.alpha = 1
                 NSUserDefaults.standardUserDefaults().setObject(true, forKey: "Apple_filtered")
             } else {
-                self.appleImage.alpha = 0.2
+                self.appleImage.alpha = 0.15
                 NSUserDefaults.standardUserDefaults().setObject(false, forKey: "Apple_filtered")
             }
             
@@ -131,19 +131,19 @@ class FilterViewController: UIViewController {
         if ( NSUserDefaults.standardUserDefaults().objectForKey("Agenda Master_filtered") as! Bool ) == true {
             self.agendaMasterImage.alpha = 1
         } else {
-            self.agendaMasterImage.alpha = 0.2
+            self.agendaMasterImage.alpha = 0.15
         }
         
         if ( NSUserDefaults.standardUserDefaults().objectForKey("Google_filtered") as! Bool ) == true {
             self.googleImage.alpha = 1
         } else {
-            self.googleImage.alpha = 0.2
+            self.googleImage.alpha = 0.15
         }
         
         if ( NSUserDefaults.standardUserDefaults().objectForKey("Apple_filtered") as! Bool ) == true {
             self.appleImage.alpha = 1
         } else {
-            self.appleImage.alpha = 0.2
+            self.appleImage.alpha = 0.15
         }
         
         let agendaMasterImageTap = UITapGestureRecognizer(target: self, action: #selector(self.changeStateOfAgendaMaster))
