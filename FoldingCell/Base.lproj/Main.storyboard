@@ -286,6 +286,13 @@
                             <constraint firstItem="A3s-OG-ZOC" firstAttribute="centerX" secondItem="JpI-OI-tWy" secondAttribute="centerX" id="zoS-LD-lpe"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="1Z5-S7-cjn">
+                        <barButtonItem key="rightBarButtonItem" title="Update" id="FdL-2W-rFw">
+                            <connections>
+                                <action selector="updateBarButtonDidTapped:" destination="1qM-Du-8gY" id="mGZ-0l-Rl2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="agendaMasterButton" destination="z2f-JA-yWg" id="8Ud-8s-TkQ"/>
                         <outlet property="appleButton" destination="cmC-18-7as" id="1Zd-OG-xOP"/>
@@ -434,7 +441,7 @@
             </objects>
             <point key="canvasLocation" x="-2418" y="-410"/>
         </scene>
-        <!--AGENDA-->
+        <!--CALENDAR-->
         <scene sceneID="Q2d-BE-geS">
             <objects>
                 <tableViewController storyboardIdentifier="EventTableViewController" id="0cn-rv-Emg" customClass="EventTableViewController" customModule="Agenda_Master" customModuleProvider="target" sceneMemberID="viewController">
@@ -787,7 +794,7 @@
                             <outlet property="delegate" destination="0cn-rv-Emg" id="o83-eX-gao"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="AGENDA" id="jr9-RO-KXy">
+                    <navigationItem key="navigationItem" title="CALENDAR" id="jr9-RO-KXy">
                         <barButtonItem key="leftBarButtonItem" title="Auth" id="VFg-hC-FDF">
                             <connections>
                                 <segue destination="1qM-Du-8gY" kind="show" id="XsN-hn-tAr"/>

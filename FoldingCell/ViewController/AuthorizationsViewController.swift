@@ -55,6 +55,37 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
         })
     }
     
+    @IBAction func updateBarButtonDidTapped(sender: AnyObject) {
+        
+        let alert = UIAlertController(title: "UPDATE", message: "Do you want to update all calendars?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action) -> Void in
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.pullEvents()
+            })
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                eventTable.prepareForReload()
+                eventTable.tableView.reloadData()
+                
+            })
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "NO", style: .Default, handler: { (action) in
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
@@ -191,8 +222,8 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
             } else {
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.appleButton.hidden = true
                     defaults.setObject(true, forKey: "isSignedInApple")
+                    self.updateButtons()
                     self.pullEvents()
                 })
                 
@@ -369,7 +400,8 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                 
                 let eventStore = EKEventStore()
                 
-                let events = eventStore.eventsMatchingPredicate( eventStore.predicateForEventsWithStartDate(NSDate(), endDate: NSDate(timeIntervalSinceNow: +30*24*3600), calendars: [eventStore.defaultCalendarForNewEvents]) )
+                let events = eventStore.eventsMatchingPredicate( eventStore.predicateForEventsWithStartDate(NSDate(), endDate: NSDate(timeIntervalSinceNow: 3*30*24*3600), calendars: [eventStore.defaultCalendarForNewEvents]) )
+                print( eventStore.defaultCalendarForNewEvents.title )
                 
                 for event in events {
                     
@@ -391,7 +423,7 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                     
                     if newEvent.endDate != nil {
                         newEvent.endDateString = formatter.stringFromDate(newEvent.endDate)
-                        newEvent.endDateString = formatter2.stringFromDate(newEvent.endDate)
+                        newEvent.endHourString = formatter2.stringFromDate(newEvent.endDate)
                     }
                     
                     
@@ -458,13 +490,6 @@ class AuthorizationsViewController: UIViewController, UIViewControllerTransition
                     let newEvent = Event()
                     
                     newEvent.name = event.summary
-                    
-                    if event.start != nil {
-                        if event.start.dateTime != nil {
-                            
-                            print("\(newEvent.name) => \(event.start.dateTime.date)")
-                        }
-                    }
                     
                     let formatter = NSDateFormatter()
                     formatter.dateFormat = "MMM dd, yyyy"

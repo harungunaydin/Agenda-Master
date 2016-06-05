@@ -14,7 +14,7 @@ class FilterViewController: UIViewController {
     
     @IBAction func resetButtonDidTapped(sender: AnyObject) {
         
-        let alert = UIAlertController(title: "RESET", message: "Do you want to bring all deleted events?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "RESET", message: "Do you want to bring all deleted events back?", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "YES", style: .Default, handler: { (action) -> Void in
             

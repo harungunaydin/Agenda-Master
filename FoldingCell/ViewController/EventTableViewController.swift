@@ -23,8 +23,6 @@ class EventTableViewController: UITableViewController {
         
         self.tableView.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
-   //     self.refreshControl?.addTarget(self, action: #selector( self.handleRefresh ), forControlEvents: UIControlEvents.ValueChanged)
-        
         eventTable = self
         
         self.transitioningDelegate = self
